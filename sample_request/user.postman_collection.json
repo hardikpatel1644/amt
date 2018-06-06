@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "af34bba7-0338-4139-a510-03c5a4f4431d",
+		"name": "user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost/amt/API/user/delete.php?id=22",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/amt/API/user/delete.php?id=22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"user",
+						"delete.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/user/list.php",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/amt/API/user/list.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"user",
+						"list.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/user/create.php",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "user_type",
+							"value": "admin",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "first_name",
+							"value": "Hardikkumar",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "last_name",
+							"value": "Patel",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "email",
+							"value": "hpca1644@gmail.com",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "id",
+							"value": "32",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/amt/API/user/update.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"user",
+						"update.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

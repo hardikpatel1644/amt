@@ -11,7 +11,7 @@ define("DB_USERNAME", "root"); // Database username
 define("DB_PASSWORD", ""); // Database Password
 define("DB_NAME", "amt"); // Database name
 
-define("PASSWORD_SECRET", md5("AMT_PASSWORD"));
-define("TOKEN_SECRET", md5("AMT_TOKEN"));
+define("PASSWORD_SECRET", "AMT_PASSWORD");
+define("TOKEN_SECRET", "AMT_TOKEN");
 
 

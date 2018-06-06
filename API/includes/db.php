@@ -54,10 +54,68 @@ class Db {
             }
 
             if (sizeof($asResult) == 0) {
-                throw new Exception("Data not found");
+                throw new Exception("No matching records found");
             }
 
             return $asResult;
+        } catch (PDOException $e) {
+            throw new Exception("Database query error");
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Function to get single data from table
+     * @param string $ssQuery
+     * @param string $ssFields
+     * @return array
+     * @throws Exception
+     */
+    protected function getOneData($ssQuery, $ssFields, $ssFlag = 0) {
+        try {
+
+            $ssStatement = $this->obDb->prepare($ssQuery);
+            $ssStatement->execute($ssFields);
+            $asResult = array();
+            while ($result = $ssStatement->fetchObject()) {
+                if ($ssFlag == 1)
+                    array_push($asResult, $result);
+                else
+                    $asResult = $result;
+            }
+            if (sizeof($asResult) == 0) {
+                throw new Exception("No matching records found");
+            }
+
+            return $asResult;
+        } catch (PDOException $e) {
+            throw new Exception("Database query error");
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Function to get count data from table
+     * @param string $ssQuery
+     * @param string $ssFields
+     * @return array
+     * @throws Exception
+     */
+    protected function getCountData($ssQuery, $ssFields, $ssFlag = 0) {
+        try {
+
+            $ssStatement = $this->obDb->prepare($ssQuery);
+            $ssStatement->execute($ssFields);
+            $asResult = array();
+            while ($result = $ssStatement->fetchObject()) {
+                array_push($asResult, $result);
+            }
+           // echo "<pre>";            print_r($asResult);
+           // echo count($asResult);
+           // exit;
+            return count($asResult);
         } catch (PDOException $e) {
             throw new Exception("Database query error");
         } catch (Exception $e) {
@@ -76,8 +134,24 @@ class Db {
         try {
             $ssStatement = $this->obDb->prepare($ssQuery);
             $ssStatement->execute($asFields);
+            return $this->obDb->lastInsertId();
+        } catch (PDOException $e) {
+            throw new Exception("Database query error");
+        }
+    }
 
-            return "successfull";
+    /**
+     * Function to post data into table
+     * @param string $ssQuery
+     * @param array $asFields
+     * @return string
+     * @throws Exception
+     */
+    protected function updateData($ssQuery, $asFields) {
+        try {
+            $ssStatement = $this->obDb->prepare($ssQuery);
+
+            $ssStatement->execute($asFields);
         } catch (PDOException $e) {
             throw new Exception("Database query error");
         }

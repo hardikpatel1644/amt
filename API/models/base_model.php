@@ -1,6 +1,7 @@
 <?php
 
 include_once '../includes/db.php';
+include_once '../lib/functions.php';
 
 /**
  * Base model class 
@@ -41,9 +42,12 @@ class Base_model extends Db {
      * @return array
      */
     function getById($id) {
-        $ssQuery = "SELECT {$this->ssFields_str} FROM {$this->ssTableName} WHERE id= :id";
-        $ssFields = array("id" => $id);
-        return $this->obDb->getData($ssQuery, $ssFields);
+        if ($id != '') {
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE id= :id";
+            $ssFields = array("id" => $id);
+            return $this->obDb->getOneData($ssQuery, $ssFields);
+        }
+        return false;
     }
 
     /**
@@ -52,10 +56,15 @@ class Base_model extends Db {
      * @param string $ssValue
      * @return array
      */
-    function getByField($ssField, $ssValue) {
-        $ssQuery = "SELECT {$this->ssFields_str} FROM {$this->ssTableName} WHERE " . $ssField . "= :value";
-        $ssFields = array("value" => $ssValue);
-        return $this->obDb->getData($ssQuery, $ssFields);
+    function getByField($ssField, $ssValue, $ssFlag = 0) {
+
+        if ($ssField != '' && $ssValue != '') {
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "= :value";
+            $ssFields = array("value" => $ssValue);
+
+            return $this->obDb->getOneData($ssQuery, $ssFields, $ssFlag);
+        }
+        return false;
     }
 
     /**
@@ -63,9 +72,13 @@ class Base_model extends Db {
      * @param array $asData
      * @return int
      */
-    function postItem($asData) {
-        $ssQuery = "INSERT INTO {$this->ssTableName} ({$this->ssFields_str}) VALUES ({$this->parameterizeDataForInsert($asData)})";
-        return $this->obDb->postData($ssQuery, $asData);
+    function insertData($asData) {
+        if (count($asData) > 0) {
+            $asData = $this->mapPostFields($asData);
+            $ssQuery = "INSERT INTO {$this->ssTableName} ({$this->ssFields_str}) VALUES ({$this->parameterizeDataForInsert($asData)})";
+            return $this->obDb->postData($ssQuery, $asData);
+        } else
+            return false;
     }
 
     /**
@@ -75,9 +88,13 @@ class Base_model extends Db {
      * @return type
      */
     function updateById($id, $asSetData) {
-        $ssQuery = "UPDATE {$this->ssTableName} SET {$this->parameterizeData($asSetData)} WHERE id = :id";
-        $asSetData["id"] = $id;
-        return $this->obDb->postData($ssQuery, $asSetData);
+        if ($id != '' && count($asSetData) > 0) {
+            unset($asSetData['id']);
+            $ssQuery = "UPDATE {$this->ssTableName} SET {$this->parameterizeData($asSetData)} WHERE id = :id";
+            $asSetData["id"] = $id;
+            return $this->obDb->updateData($ssQuery, $asSetData);
+        }
+        return false;
     }
 
     /**
@@ -86,9 +103,12 @@ class Base_model extends Db {
      * @return type
      */
     function deleteById($id) {
-        $ssQuery = "DELETE FROM {$this->ssTableName} WHERE id = :id";
-        $ssFields = array("id" => $id);
-        return $this->obDb->postData($ssQuery, $ssFields);
+        if ($id != '') {
+            $ssQuery = "DELETE FROM {$this->ssTableName} WHERE id = :id";
+            $ssFields = array("id" => $id);
+            return $this->obDb->postData($ssQuery, $ssFields);
+        }
+        return false;
     }
 
     /**
@@ -98,14 +118,18 @@ class Base_model extends Db {
      */
     function parameterizeData($asData) {
         $str = "";
-        $snCount = 1;
-        foreach ($asData as $key => $value) {
-            if ($snCount == count($asData))
-                $str .= $key . "=:" . $key;
-            else
-                $str .= $key . "=:" . $key . ",";
+        if (count($asData) > 0) {
 
-            $snCount++;
+            $snCount = 1;
+            foreach ($asData as $key => $value) {
+                if ($snCount == count($asData))
+                    $str .= $key . "=:" . $key;
+                else
+                    $str .= $key . "=:" . $key . ",";
+
+                $snCount++;
+            }
+            return $str;
         }
         return $str;
     }
@@ -117,11 +141,75 @@ class Base_model extends Db {
      */
     function parameterizeDataForInsert($asData) {
         $str = "";
-        foreach ($asData as $key => $value) {
-            $str .= ":" . $key . ",";
+        if (count($asData) > 0) {
+            foreach ($asData as $key => $value) {
+                $str .= ":" . $key . ",";
+            }
+            $str = substr($str, 0, -1);
+            return $str;
         }
-        $str = substr($str, 0, -1);
         return $str;
+    }
+
+    /**
+     * Function to map request array with model fields
+     * @param type $asPostData
+     * @return string
+     */
+    function mapPostFields($asPostData = array()) {
+        $asMapped = array();
+        if (count($asPostData) > 0) {
+            foreach ($this->ssFields as $ssKey => $ssField) {
+                if (isset($asPostData["{$ssField}"])) {
+                    $ssFieldValue = cleanInputs($asPostData["{$ssField}"]);
+                    $asMapped[$ssField] = $ssFieldValue;
+                } else {
+                    $asMapped[$ssField] = "";
+                }
+            }
+            unset($ssField);
+        }
+        return $asMapped;
+    }
+
+    /**
+     * Function to check record exists or not
+     * @param string $ssValue
+     * @param boolean $ssFlag
+     */
+    public function isUnique($ssField, $ssValue, $ssFlag = 0) {
+        if ($ssField != '' && $ssValue != '') {
+            $snCount = $this->getCount($ssField, $ssValue, $ssFlag);
+            if ($ssFlag == 1) {
+
+                if ($snCount >= 1) { // check for update time 
+                    echo parseJson(array("error" => true, "message" => "edit:Record alredy exist."));
+                    exit;
+                }
+            } else {   // check for insert time
+                if ($snCount > 0) { // check for update time 
+                    echo parseJson(array("error" => true, "message" => "Record alredy exist."));
+                    exit;
+                }
+            }
+        }
+    }
+
+    /**
+     * Function to get count by field
+     * @param string $ssField
+     * @param string $ssValue
+     * @param boolean $ssFlag
+     * @return int
+     */
+    public function getCount($ssField, $ssValue, $ssFlag = 0) {
+
+        if ($ssField != '' && $ssValue != '') {
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "= :value";
+            $ssFields = array("value" => $ssValue);
+
+            return $this->obDb->getCountData($ssQuery, $ssFields, $ssFlag);
+        }
     }
 
 }

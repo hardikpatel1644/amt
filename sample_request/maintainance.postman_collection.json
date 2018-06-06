@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "2d00b994-5e49-4297-9fdc-3f8420eb1772",
+		"name": "maintainance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost/amt/API/maintainance/create.php",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_vehicle",
+							"value": "11",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "maintainance_name",
+							"value": "tire_rotation",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "cost",
+							"value": "20",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "tire_rotation",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/amt/API/maintainance/create.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"maintainance",
+						"create.php"
+					]
+				},
+				"description": "test\t"
+			},
+			"response": []
+		}
+	]
+}

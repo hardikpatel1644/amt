@@ -3,14 +3,14 @@
 include_once 'base_model.php';
 
 /**
- * User model class
+ * Maintainance model class
  *
  * @author Hardikkumar Patel <hpca1644@gmail.com>
  */
-class User_model extends Base_model {
+class Maintainance_model extends Base_model {
 
-    private $ssTableName = "user";
-    public $ssFields = array("user_type", "first_name", "last_name", "email", "password", "salt");
+    private $ssTableName = "maintainance";
+    public $ssFields = array("id_vehicle", "maintainance_name", "cost", "description");
 
     public function __construct() {
         parent::__construct($this->ssTableName, $this->ssFields);
