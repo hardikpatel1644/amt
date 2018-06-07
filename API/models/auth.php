@@ -1,6 +1,6 @@
 <?php
 
-include_once '../models/user_model.php';
+include_once __DIR__ . '/user_model.php';
 
 /**
  * Authentication class
@@ -14,8 +14,9 @@ class Auth extends User_model {
     public $asUserData;
 
     public function __construct() {
-        $this->getToken();
+
         parent::__construct();
+        $this->validateToken();
     }
 
     /**
@@ -66,8 +67,9 @@ class Auth extends User_model {
      * @return string
      */
     public function getToken() {
-        if (isset($_SESSION['TOKEN']) && $_SESSION['TOKEN'] != '') {
-            return $_SESSION['TOKEN'];
+        $headers = apache_request_headers();
+        if (isset($headers['TOKEN']) && $headers['TOKEN'] != '') {
+            return $headers['TOKEN'];
         } else
             return false;
     }
@@ -78,11 +80,16 @@ class Auth extends User_model {
      */
     public function validateToken() {
         $ssToken = $this->getToken();
+
         if ($ssToken != '') {
             $asUser = $this->getByField('token', $ssToken);
             if (count($asUser) > 0) {
-                if ($asUser->token == $ssToken)
+                if ($asUser->token == $ssToken) {
                     return true;
+                } else {
+                    echo parseJson(array("error" => true, "message" => "Invalid token.Please login with valid credentials."));
+                    exit;
+                }
             }
         }
         return false;

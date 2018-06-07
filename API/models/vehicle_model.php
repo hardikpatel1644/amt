@@ -1,6 +1,6 @@
 <?php
 
-include_once 'base_model.php';
+include_once __DIR__ . '/base_model.php';
 
 /**
  * Vehicle model class

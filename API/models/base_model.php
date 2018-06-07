@@ -1,7 +1,7 @@
 <?php
 
-include_once '../includes/db.php';
-include_once '../lib/functions.php';
+include_once __DIR__ . '/../includes/db.php';
+include_once __DIR__ . '/../lib/functions.php';
 
 /**
  * Base model class 
@@ -30,7 +30,7 @@ class Base_model extends Db {
      * Function to get all data from table
      * @return array
      */
-    function getAll() {
+    public function getAll() {
         $ssQuery = "SELECT * FROM {$this->ssTableName}";
         $ssFields = array();
         return $this->obDb->getData($ssQuery, $ssFields);
@@ -41,7 +41,7 @@ class Base_model extends Db {
      * @param int $id
      * @return array
      */
-    function getById($id) {
+    public function getById($id = '') {
         if ($id != '') {
             $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE id= :id";
             $ssFields = array("id" => $id);
@@ -56,12 +56,11 @@ class Base_model extends Db {
      * @param string $ssValue
      * @return array
      */
-    function getByField($ssField, $ssValue, $ssFlag = 0) {
+    public function getByField($ssField = '', $ssValue = '', $ssFlag = 0) {
 
         if ($ssField != '' && $ssValue != '') {
-            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "= :value";
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "=:value";
             $ssFields = array("value" => $ssValue);
-
             return $this->obDb->getOneData($ssQuery, $ssFields, $ssFlag);
         }
         return false;
@@ -72,7 +71,7 @@ class Base_model extends Db {
      * @param array $asData
      * @return int
      */
-    function insertData($asData) {
+    public function insertData($asData = array()) {
         if (count($asData) > 0) {
             $asData = $this->mapPostFields($asData);
             $ssQuery = "INSERT INTO {$this->ssTableName} ({$this->ssFields_str}) VALUES ({$this->parameterizeDataForInsert($asData)})";
@@ -87,7 +86,7 @@ class Base_model extends Db {
      * @param array $asSetData
      * @return type
      */
-    function updateById($id, $asSetData) {
+    public function updateById($id = '', $asSetData = array()) {
         if ($id != '' && count($asSetData) > 0) {
             unset($asSetData['id']);
             $ssQuery = "UPDATE {$this->ssTableName} SET {$this->parameterizeData($asSetData)} WHERE id = :id";
@@ -102,7 +101,7 @@ class Base_model extends Db {
      * @param int $id
      * @return type
      */
-    function deleteById($id) {
+    public function deleteById($id = '') {
         if ($id != '') {
             $ssQuery = "DELETE FROM {$this->ssTableName} WHERE id = :id";
             $ssFields = array("id" => $id);
@@ -116,7 +115,7 @@ class Base_model extends Db {
      * @param array $asData
      * @return string
      */
-    function parameterizeData($asData) {
+    public function parameterizeData($asData = array()) {
         $str = "";
         if (count($asData) > 0) {
 
@@ -139,7 +138,7 @@ class Base_model extends Db {
      * @param array $asData
      * @return type
      */
-    function parameterizeDataForInsert($asData) {
+    public function parameterizeDataForInsert($asData = array()) {
         $str = "";
         if (count($asData) > 0) {
             foreach ($asData as $key => $value) {
@@ -156,7 +155,7 @@ class Base_model extends Db {
      * @param type $asPostData
      * @return string
      */
-    function mapPostFields($asPostData = array()) {
+    public function mapPostFields($asPostData = array()) {
         $asMapped = array();
         if (count($asPostData) > 0) {
             foreach ($this->ssFields as $ssKey => $ssField) {
@@ -177,7 +176,7 @@ class Base_model extends Db {
      * @param string $ssValue
      * @param boolean $ssFlag
      */
-    public function isUnique($ssField, $ssValue, $ssFlag = 0) {
+    public function isUnique($ssField = '', $ssValue = '', $ssFlag = 0) {
         if ($ssField != '' && $ssValue != '') {
             $snCount = $this->getCount($ssField, $ssValue, $ssFlag);
             if ($ssFlag == 1) {
@@ -202,7 +201,7 @@ class Base_model extends Db {
      * @param boolean $ssFlag
      * @return int
      */
-    public function getCount($ssField, $ssValue, $ssFlag = 0) {
+    public function getCount($ssField = '', $ssValue = '', $ssFlag = 0) {
 
         if ($ssField != '' && $ssValue != '') {
             $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "= :value";

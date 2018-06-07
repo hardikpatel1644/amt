@@ -2,7 +2,10 @@
 
 include_once '../models/auth.php';
 $obModel = new Auth();
-
+if (!$obModel->validateToken()) {
+    echo parseJson(array("error" => true, "message" => "Please login to get access."));
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] == "PUT") {
     try {
 

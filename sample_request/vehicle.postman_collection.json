@@ -16,39 +16,85 @@
 					{
 						"key": "Content-Type",
 						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "TOKEN",
+						"value": "fc988449032127acb593fe648ff87143"
 					}
 				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "id_vehicle",
-							"value": "11",
+							"key": "company",
+							"value": "Test12Toekn",
 							"type": "text",
 							"description": ""
 						},
 						{
-							"key": "maintainance_name",
-							"value": "tire_rotation",
+							"key": "model",
+							"value": "Test12Toekn",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "model_year",
+							"value": "2006",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "vehicle_type",
+							"value": "Gas",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "licence_plate",
+							"value": "BQR456",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "color",
+							"value": "Black",
 							"description": "",
 							"type": "text"
 						},
 						{
-							"key": "cost",
-							"value": "20",
+							"key": "vin_no",
+							"value": "4TWEEG344GEDFSF234434",
 							"description": "",
 							"type": "text"
 						},
 						{
-							"key": "description",
-							"value": "tire_rotation",
+							"key": "transmission",
+							"value": "automatic",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "last_odometer",
+							"value": "120000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "id_user",
+							"value": "32",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "body_type",
+							"value": "sedan",
 							"description": "",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost/amt/API/maintainance/create.php",
+					"raw": "http://localhost/amt/API/vehicle/create.php",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -56,7 +102,7 @@
 					"path": [
 						"amt",
 						"API",
-						"maintainance",
+						"vehicle",
 						"create.php"
 					]
 				},

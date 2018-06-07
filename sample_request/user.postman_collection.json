@@ -110,6 +110,101 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/user/create.php",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_type",
+							"value": "admin",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "first_name",
+							"value": "Hardikkumar12334",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Patel123123",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "hpca@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/amt/API/user/create.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"user",
+						"create.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/user/create.php",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hpca1644@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/amt/API/user/login.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"user",
+						"login.php"
+					]
+				},
+				"description": "login api"
+			},
+			"response": []
 		}
 	]
 }

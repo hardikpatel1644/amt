@@ -1,6 +1,6 @@
 <?php
 
-include_once '../includes/config.php';
+include_once __DIR__ . '/../includes/config.php';
 
 /**
  * Database class
@@ -74,7 +74,6 @@ class Db {
      */
     protected function getOneData($ssQuery, $ssFields, $ssFlag = 0) {
         try {
-
             $ssStatement = $this->obDb->prepare($ssQuery);
             $ssStatement->execute($ssFields);
             $asResult = array();
@@ -84,10 +83,6 @@ class Db {
                 else
                     $asResult = $result;
             }
-            if (sizeof($asResult) == 0) {
-                throw new Exception("No matching records found");
-            }
-
             return $asResult;
         } catch (PDOException $e) {
             throw new Exception("Database query error");
@@ -112,9 +107,9 @@ class Db {
             while ($result = $ssStatement->fetchObject()) {
                 array_push($asResult, $result);
             }
-           // echo "<pre>";            print_r($asResult);
-           // echo count($asResult);
-           // exit;
+            // echo "<pre>";            print_r($asResult);
+            // echo count($asResult);
+            // exit;
             return count($asResult);
         } catch (PDOException $e) {
             throw new Exception("Database query error");
@@ -134,7 +129,7 @@ class Db {
         try {
             $ssStatement = $this->obDb->prepare($ssQuery);
             $ssStatement->execute($asFields);
-            return $this->obDb->lastInsertId();
+            return (int)$this->obDb->lastInsertId();
         } catch (PDOException $e) {
             throw new Exception("Database query error");
         }

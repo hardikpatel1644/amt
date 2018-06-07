@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $ssEmail = $asPost['email'];
         $ssPassword = $asPost['password'];
         $ssToken = $obModel->validateLogin($ssEmail, $ssPassword);
-
         echo parseJson(array("success" => true, "message" => "Record added successfully.", "TOKEN" => $ssToken));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));

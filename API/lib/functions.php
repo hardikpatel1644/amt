@@ -5,11 +5,14 @@ session_start();
 
 /**
  * Function to parse Json data
- * @param type $asData
- * @return type
+ * @param array $asData
+ * @return string
  */
 function parseJson($asData) {
-    return json_encode($asData, JSON_UNESCAPED_UNICODE);
+    if (is_array($asData) && count($asData) > 0)
+        return json_encode($asData, JSON_UNESCAPED_UNICODE);
+    else
+        return FALSE;
 }
 
 /**

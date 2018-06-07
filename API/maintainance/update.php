@@ -1,7 +1,17 @@
 <?php
 
 include_once '../models/maintainance_model.php';
+include_once '../models/vehicle_model.php';
+include_once '../models/auth.php';
+
 $obModel = new Maintainance_model();
+$obVehicleModel = new Vehicle_model();
+$obAuth = new Auth();
+if (!$obAuth->validateToken()) {
+    echo parseJson(array("error" => true, "message" => "Please login to get access."));
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "PUT") {
     try {
         parse_str(file_get_contents("php://input"), $asPost);
