@@ -25,7 +25,7 @@ class Auth extends User_model {
      * @param type $ssPassword
      * @return boolean
      */
-    public function validateLogin($ssEmail, $ssPassword) {
+    public function validateLogin($ssEmail = '', $ssPassword = '') {
         if ($ssEmail != '' && $ssPassword != "") {
             $ssToken = "";
             $asUser = $this->getByField('email', $ssEmail);
@@ -44,7 +44,7 @@ class Auth extends User_model {
      * @param int $id
      * @return string / boolean
      */
-    public function setToken($id) {
+    public function setToken($id = '') {
         if ($id != '') {
             $ssToken = $this->generateToken();
             $asToken['token'] = $ssToken;
@@ -101,7 +101,7 @@ class Auth extends User_model {
      * @param string $ssPassword
      * @return array
      */
-    public function generatePasswordHash($ssEmail, $ssPassword) {
+    public function generatePasswordHash($ssEmail = '', $ssPassword = '') {
         $asHash = array();
         if ($ssEmail != '' && $ssPassword != "") {
             $ssSalt = md5($ssEmail . PASSWORD_SECRET);

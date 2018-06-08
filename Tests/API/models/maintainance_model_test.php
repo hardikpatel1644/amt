@@ -1,23 +1,23 @@
 <?php
 
 require __DIR__ . '/../includes/config.php';
-require __DIR__ . '/../../../API/models/user_model.php';
+require __DIR__ . '/../../../API/models/maintainance_model.php';
 
 /**
- * Usrer model test cases 
+ * Maintainance model test cases 
  *
  * @author Hardikkumar Patel <hpca1644@gmail.com>
  */
-class User_model_test extends \PHPUnit_Framework_TestCase {
+class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
 
     private $obModel;
-    private $ssTableName= 'user';
+    private $ssTableName = 'maintainance';
 
     /**
      * Initialize an object
      */
     public function setUp() {
-        $this->obModel = new User_model();
+        $this->obModel = new Maintainance_model();
     }
 
     /**
@@ -31,7 +31,7 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
      * Function to check table name
      */
     public function testTableName() {
-        $this->assertEquals('user', $this->ssTableName, "Table name is " . $this->ssTableName);
+        $this->assertEquals('maintainance', $this->ssTableName, "Table name is " . $this->ssTableName);
         $this->assertNotEquals('test', $this->ssTableName, " \" test \"Table name is not equals to defined" . $this->ssTableName);
     }
 
@@ -42,8 +42,8 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $asData = $this->obModel->getAll();
         $obData = $asData[0];
         $this->assertArrayHasKey(0, $asData);
-        $this->assertAttributeEquals('admin', "user_type", $obData);
-        $this->assertAttributeNotEquals('admin12', "user_type", $obData);
+        $this->assertAttributeEquals('oil_change', "maintainance_name", $obData);
+        $this->assertAttributeNotEquals('admin12', "maintainance_name", $obData);
         // $this->assertCount(7, $asData); // Total records = 7 
     }
 
@@ -60,10 +60,10 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertArrayNotHasKey(0, $asData2);
         $this->assertCount(0, $asData2); // Total records = 0 
         //test with numeric and valid value
-        $asData3 = $this->obModel->getById(32);
-        $this->assertAttributeEquals('admin', "user_type", $asData3);
-        $this->assertAttributeNotEquals('admin12', "user_type", $asData3);
-        $this->assertObjectHasAttribute('user_type', $asData3);
+        $asData3 = $this->obModel->getById(14);
+        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData3);
+        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData3);
+        $this->assertObjectHasAttribute('maintainance_name', $asData3);
     }
 
     /**
@@ -74,10 +74,10 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $asData1 = $this->obModel->GetByField();
         $this->assertFalse($asData1);
 
-        $asData2 = $this->obModel->GetByField('email', '');
+        $asData2 = $this->obModel->GetByField('maintainance_name', '');
         $this->assertFalse($asData2);
 
-        $asData3 = $this->obModel->GetByField('', 'hpca1644@gmail.com');
+        $asData3 = $this->obModel->GetByField('', 'oil_change');
         $this->assertFalse($asData3);
 
 
@@ -85,23 +85,23 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * *  test with valid values with only one record
          */
-        $asData4 = $this->obModel->GetByField('email', 'hpca1644@gmail.com');
+        $asData4 = $this->obModel->GetByField('maintainance_name', 'oil_change');
 
-        $this->assertAttributeEquals('admin', "user_type", $asData4);
-        $this->assertAttributeNotEquals('admin12', "user_type", $asData4);
-        $this->assertObjectHasAttribute('user_type', $asData4);
+        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData4);
+        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData4);
+        $this->assertObjectHasAttribute('maintainance_name', $asData4);
 
 
         /**
          *  test with valid values with all possible records found
          */
-        $asData5 = $this->obModel->GetByField('email', 'hpca1644122213213@gmail.com', 1);
-        $this->assertCount(3, $asData5); // Total records = 3 
+        $asData5 = $this->obModel->GetByField('maintainance_name', 'oil_change', 1);
+        $this->assertCount(1, $asData5); // Total records = 3 
         $asData = $asData5[0];
-        $this->assertAttributeEquals('admin', "user_type", $asData);
-        $this->assertAttributeNotEquals('admin12', "user_type", $asData);
-        $this->assertObjectHasAttribute('user_type', $asData);
-        $this->assertEquals('hpca1644122213213@gmail.com', $asData->email);
+        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData);
+        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData);
+        $this->assertObjectHasAttribute('maintainance_name', $asData);
+        $this->assertEquals('oil_change', $asData->maintainance_name);
     }
 
     /**
@@ -120,7 +120,7 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with valid data
          */
-        $asFeedData = array('user_type' => 'admin', 'first_name' => 'Entered By phpunit', 'last_name' => 'Entered by phpunit', 'email' => 'phpunit@php.com', 'password' => 'test123');
+        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $id = $this->obModel->insertData($asFeedData);
         $this->assertTrue(is_integer($id));
     }
@@ -141,12 +141,12 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with valid id  and empty data array
          */
-        $asData = $this->obModel->updateById(49, $asFeedData);
+        $asData = $this->obModel->updateById(14, $asFeedData);
         $this->assertFalse($asData);
         /**
          * Test with blank id and valid data
          */
-        $asFeedData = array('user_type' => 'admin', 'first_name' => 'Updated By phpunit', 'last_name' => 'Updated by phpunit', 'email' => 'Updatedphpunit@php.com');
+        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData = $this->obModel->updateById('', $asFeedData);
         $this->assertFalse($asData);
 
@@ -154,8 +154,8 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with valid id and  valid data
          */
-        $asFeedData = array('user_type' => 'customer', 'first_name' => 'Updated  By phpunit', 'last_name' => 'Updated by phpunit', 'email' => 'Updatedphpunit@php.com');
-        $asData = $this->obModel->updateById(49, $asFeedData);
+        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asData = $this->obModel->updateById(14, $asFeedData);
         $this->assertNull($asData);
     }
 
@@ -168,7 +168,7 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($asData1);
 
         //test with numeric and valid value
-        $asData2 = $this->obModel->deleteById(50);
+        $asData2 = $this->obModel->deleteById(18);
         $this->assertEquals($asData2, 0);
     }
 
@@ -184,16 +184,16 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_string($asData1));
 
-        $ssExpectedStr = "user_type=:user_type,first_name=:first_name,last_name=:last_name,email=:email";
+        $ssExpectedStr = "id_vehicle=:id_vehicle,maintainance_name=:maintainance_name,cost=:cost,description=:description";
 
         /**
          * Test with valid array 
          */
-        $asFeedData = array('user_type' => 'customer', 'first_name' => 'parameterized first_name', 'last_name' => 'parameterized last_name', 'email' => 'Updatedphpunit@php.com');
+        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData2 = $this->obModel->parameterizeData($asFeedData);
 
         $this->assertTrue(is_string($asData2));
-        $this->assertStringStartsWith("user_type", $asData2);
+        $this->assertStringStartsWith("id_vehicle", $asData2);
         $this->assertStringMatchesFormat($ssExpectedStr, $asData2);
     }
 
@@ -209,16 +209,16 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_string($asData1));
 
-        $ssExpectedStr = ":user_type,:first_name,:last_name,:email";
+        $ssExpectedStr = ":id_vehicle,:maintainance_name,:cost,:description";
 
         /**
          * Test with valid array 
          */
-        $asFeedData = array('user_type' => 'customer', 'first_name' => 'parameterized first_name', 'last_name' => 'parameterized last_name', 'email' => 'Updatedphpunit@php.com');
+        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData2 = $this->obModel->parameterizeDataForInsert($asFeedData);
 
         $this->assertTrue(is_string($asData2));
-        $this->assertStringStartsWith(":user_type", $asData2);
+        $this->assertStringStartsWith(":id_vehicle", $asData2);
         $this->assertStringMatchesFormat($ssExpectedStr, $asData2);
     }
 
@@ -234,16 +234,16 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_array($asData1));
 
-        $ssExpectedArray = array('user_type' => 'customer', 'first_name' => 'parameterized first_name', 'last_name' => 'parameterized last_name', 'email' => 'Updatedphpunit@php.com', 'password' => '', 'salt' => '');
+        $ssExpectedArray = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
 
 
         /**
          * Test with valid array 
          */
-        $asFeedData = array('user_type' => 'customer', 'first_name' => 'parameterized first_name', 'last_name' => 'parameterized last_name', 'email' => 'Updatedphpunit@php.com');
+        $asFeedData = $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
 
         $asData2 = $this->obModel->mapPostFields($asFeedData);
-        $this->assertArrayHasKey('user_type', $asData2);
+        $this->assertArrayHasKey('id_vehicle', $asData2);
         $this->assertTrue(is_array($asData2));
     }
 
@@ -256,17 +256,17 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
 
         $this->assertNull($asData1);
 
-        $asData2 = $this->obModel->getCount('email', '');
+        $asData2 = $this->obModel->getCount('maintainance_name', '');
         $this->assertNull($asData2);
 
-        $asData3 = $this->obModel->getCount('', 'hpca1644@gmail.com');
+        $asData3 = $this->obModel->getCount('', 'tire_rotation');
         $this->assertNull($asData3);
 
 
         /**
          * *  test with valid values with only one record
          */
-        $asData4 = $this->obModel->getCount('email', 'hpca1644@gmail.com');
+        $asData4 = $this->obModel->getCount('maintainance_name', 'oil_change');
 
         $this->assertEquals(1, $asData4);
         $this->assertTrue(is_integer($asData4));
@@ -275,46 +275,9 @@ class User_model_test extends \PHPUnit_Framework_TestCase {
         /**
          *  test with valid values with all possible records found
          */
-        $asData5 = $this->obModel->getCount('email', 'hpca1644122213213@gmail.com', 1);
-        $this->assertEquals(3, $asData5);
+        $asData5 = $this->obModel->getCount('maintainance_name', 'oil_change', 1);
+        $this->assertEquals(1, $asData5);
         $this->assertTrue(is_integer($asData5));
-    }
-
-    /**
-     * Function to test isUnique
-     */
-    public function testisUnique() {
-        //test with empty values 
-        $asData1 = $this->obModel->isUnique();
-
-        $this->assertNull($asData1);
-
-        $asData2 = $this->obModel->isUnique('email', '');
-        $this->assertNull($asData2);
-
-        $asData3 = $this->obModel->isUnique('', 'hpca1644@gmail.com');
-        $this->assertNull($asData3);
-
-        /**
-         * *  test with valid values with only one record
-         */
-        $asData4 = $this->obModel->isUnique('email', 'hpca1644@gmail.com');
-
-        $this->assertAttributeEquals('admin', "user_type", $asData4);
-        $this->assertAttributeNotEquals('admin12', "user_type", $asData4);
-        $this->assertObjectHasAttribute('user_type', $asData4);
-
-
-        /**
-         *  test with valid values with all possible records found
-         */
-        $asData5 = $this->obModel->isUnique('email', 'hpca1644122213213@gmail.com', 1);
-        $this->assertCount(3, $asData5); // Total records = 3
-        $asData = $asData5[0];
-        $this->assertAttributeEquals('admin', "user_type", $asData);
-        $this->assertAttributeNotEquals('admin12', "user_type", $asData);
-        $this->assertObjectHasAttribute('user_type', $asData);
-        $this->assertEquals('hpca1644122213213@gmail.com', $asData->email);
     }
 
 }

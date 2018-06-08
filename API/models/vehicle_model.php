@@ -21,7 +21,7 @@ class Vehicle_model extends Base_model {
      * @param int $id
      * @return boolean
      */
-    public function validateMintainanceType($id) {
+    public function validateMintainanceType($id = '') {
         if ($id != '') {
             $asVehicle = $this->getById($id);
             if ($asVehicle->vehicle_type == 'electric') {
