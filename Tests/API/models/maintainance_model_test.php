@@ -1,23 +1,23 @@
 <?php
 
 require __DIR__ . '/../includes/config.php';
-require __DIR__ . '/../../../API/models/maintainance_model.php';
+require __DIR__ . '/../../../API/models/maintenance_model.php';
 
 /**
- * Maintainance model test cases 
+ * Maintenance model test cases 
  *
  * @author Hardikkumar Patel <hpca1644@gmail.com>
  */
-class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
+class Maintenance_model_test extends \PHPUnit_Framework_TestCase {
 
     private $obModel;
-    private $ssTableName = 'maintainance';
+    private $ssTableName = 'maintenance';
 
     /**
      * Initialize an object
      */
     public function setUp() {
-        $this->obModel = new Maintainance_model();
+        $this->obModel = new Maintenance_model();
     }
 
     /**
@@ -31,7 +31,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
      * Function to check table name
      */
     public function testTableName() {
-        $this->assertEquals('maintainance', $this->ssTableName, "Table name is " . $this->ssTableName);
+        $this->assertEquals('maintenance', $this->ssTableName, "Table name is " . $this->ssTableName);
         $this->assertNotEquals('test', $this->ssTableName, " \" test \"Table name is not equals to defined" . $this->ssTableName);
     }
 
@@ -42,8 +42,8 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $asData = $this->obModel->getAll();
         $obData = $asData[0];
         $this->assertArrayHasKey(0, $asData);
-        $this->assertAttributeEquals('oil_change', "maintainance_name", $obData);
-        $this->assertAttributeNotEquals('admin12', "maintainance_name", $obData);
+        $this->assertAttributeEquals('oil_change', "maintenance_name", $obData);
+        $this->assertAttributeNotEquals('admin12', "maintenance_name", $obData);
         // $this->assertCount(7, $asData); // Total records = 7 
     }
 
@@ -61,9 +61,9 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertCount(0, $asData2); // Total records = 0 
         //test with numeric and valid value
         $asData3 = $this->obModel->getById(14);
-        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData3);
-        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData3);
-        $this->assertObjectHasAttribute('maintainance_name', $asData3);
+        $this->assertAttributeEquals('oil_change', "maintenance_name", $asData3);
+        $this->assertAttributeNotEquals('admin12', "maintenance_name", $asData3);
+        $this->assertObjectHasAttribute('maintenance_name', $asData3);
     }
 
     /**
@@ -74,7 +74,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $asData1 = $this->obModel->GetByField();
         $this->assertFalse($asData1);
 
-        $asData2 = $this->obModel->GetByField('maintainance_name', '');
+        $asData2 = $this->obModel->GetByField('maintenance_name', '');
         $this->assertFalse($asData2);
 
         $asData3 = $this->obModel->GetByField('', 'oil_change');
@@ -85,23 +85,23 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * *  test with valid values with only one record
          */
-        $asData4 = $this->obModel->GetByField('maintainance_name', 'oil_change');
+        $asData4 = $this->obModel->GetByField('maintenance_name', 'oil_change');
 
-        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData4);
-        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData4);
-        $this->assertObjectHasAttribute('maintainance_name', $asData4);
+        $this->assertAttributeEquals('oil_change', "maintenance_name", $asData4);
+        $this->assertAttributeNotEquals('admin12', "maintenance_name", $asData4);
+        $this->assertObjectHasAttribute('maintenance_name', $asData4);
 
 
         /**
          *  test with valid values with all possible records found
          */
-        $asData5 = $this->obModel->GetByField('maintainance_name', 'oil_change', 1);
+        $asData5 = $this->obModel->GetByField('maintenance_name', 'oil_change', 1);
         $this->assertCount(1, $asData5); // Total records = 3 
         $asData = $asData5[0];
-        $this->assertAttributeEquals('oil_change', "maintainance_name", $asData);
-        $this->assertAttributeNotEquals('admin12', "maintainance_name", $asData);
-        $this->assertObjectHasAttribute('maintainance_name', $asData);
-        $this->assertEquals('oil_change', $asData->maintainance_name);
+        $this->assertAttributeEquals('oil_change', "maintenance_name", $asData);
+        $this->assertAttributeNotEquals('admin12', "maintenance_name", $asData);
+        $this->assertObjectHasAttribute('maintenance_name', $asData);
+        $this->assertEquals('oil_change', $asData->maintenance_name);
     }
 
     /**
@@ -120,7 +120,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with valid data
          */
-        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $id = $this->obModel->insertData($asFeedData);
         $this->assertTrue(is_integer($id));
     }
@@ -146,7 +146,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with blank id and valid data
          */
-        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData = $this->obModel->updateById('', $asFeedData);
         $this->assertFalse($asData);
 
@@ -154,7 +154,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * Test with valid id and  valid data
          */
-        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData = $this->obModel->updateById(14, $asFeedData);
         $this->assertNull($asData);
     }
@@ -184,12 +184,12 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_string($asData1));
 
-        $ssExpectedStr = "id_vehicle=:id_vehicle,maintainance_name=:maintainance_name,cost=:cost,description=:description";
+        $ssExpectedStr = "id_vehicle=:id_vehicle,maintenance_name=:maintenance_name,cost=:cost,description=:description";
 
         /**
          * Test with valid array 
          */
-        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData2 = $this->obModel->parameterizeData($asFeedData);
 
         $this->assertTrue(is_string($asData2));
@@ -209,12 +209,12 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_string($asData1));
 
-        $ssExpectedStr = ":id_vehicle,:maintainance_name,:cost,:description";
+        $ssExpectedStr = ":id_vehicle,:maintenance_name,:cost,:description";
 
         /**
          * Test with valid array 
          */
-        $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
         $asData2 = $this->obModel->parameterizeDataForInsert($asFeedData);
 
         $this->assertTrue(is_string($asData2));
@@ -234,13 +234,13 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($asData1);
         $this->assertTrue(is_array($asData1));
 
-        $ssExpectedArray = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $ssExpectedArray = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
 
 
         /**
          * Test with valid array 
          */
-        $asFeedData = $asFeedData = array('id_vehicle' => 13, 'maintainance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
+        $asFeedData = $asFeedData = array('id_vehicle' => 13, 'maintenance_name' => 'tire_rotation', 'cost' => 1000, 'description' => 'Tire Rotation');
 
         $asData2 = $this->obModel->mapPostFields($asFeedData);
         $this->assertArrayHasKey('id_vehicle', $asData2);
@@ -256,7 +256,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
 
         $this->assertNull($asData1);
 
-        $asData2 = $this->obModel->getCount('maintainance_name', '');
+        $asData2 = $this->obModel->getCount('maintenance_name', '');
         $this->assertNull($asData2);
 
         $asData3 = $this->obModel->getCount('', 'tire_rotation');
@@ -266,7 +266,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          * *  test with valid values with only one record
          */
-        $asData4 = $this->obModel->getCount('maintainance_name', 'oil_change');
+        $asData4 = $this->obModel->getCount('maintenance_name', 'oil_change');
 
         $this->assertEquals(1, $asData4);
         $this->assertTrue(is_integer($asData4));
@@ -275,7 +275,7 @@ class Maintainance_model_test extends \PHPUnit_Framework_TestCase {
         /**
          *  test with valid values with all possible records found
          */
-        $asData5 = $this->obModel->getCount('maintainance_name', 'oil_change', 1);
+        $asData5 = $this->obModel->getCount('maintenance_name', 'oil_change', 1);
         $this->assertEquals(1, $asData5);
         $this->assertTrue(is_integer($asData5));
     }

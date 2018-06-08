@@ -1,10 +1,10 @@
 <?php
 
-include_once '../models/maintainance_model.php';
+include_once '../models/maintenance_model.php';
 include_once '../models/vehicle_model.php';
 include_once '../models/auth.php';
 
-$obModel = new Maintainance_model();
+$obModel = new Maintenance_model();
 $obVehicleModel = new Vehicle_model();
 $obAuth = new Auth();
 if (!$obAuth->validateToken()) {
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     try {
         $asPost = cleanInputs($_POST);
 
-        if ($asPost['maintainance_name'] == "oil_change") {
+        if ($asPost['maintenance_name'] == "oil_change") {
             $obVehicleModel->validateMintainanceType($asPost['id_vehicle']);
         }
         $snId = $obModel->insertData($asPost);

@@ -1,10 +1,10 @@
 <?php
 
-include_once '../models/maintainance_model.php';
+include_once '../models/maintenance_model.php';
 include_once '../models/vehicle_model.php';
 include_once '../models/auth.php';
 
-$obModel = new Maintainance_model();
+$obModel = new Maintenance_model();
 $obVehicleModel = new Vehicle_model();
 $obAuth = new Auth();
 if (!$obAuth->validateToken()) {
@@ -12,13 +12,17 @@ if (!$obAuth->validateToken()) {
     exit;
 }
 
-
-if (isset($_GET['id'])) {
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
     try {
-        $snId = cleanInputs($_GET['id']);
-        $asList = $obModel->deleteById($snId);
-        echo parseJson(array("success" => true, "message" => "Record deleted successfully."));
+        $asList = $obModel->getAll();
+        echo parseJson(array("success" => true, "data" => $asList));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));
     }
+} else {
+    echo parseJson(array("error" => true, "message" => "Please select proper http method."));
 }
+
+
+
+

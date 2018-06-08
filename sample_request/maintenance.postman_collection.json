@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost/amt/API/maintenance/create.php",
+			"name": "http://localhost/amt/API/maintainance/create.php",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -23,13 +23,13 @@
 					"formdata": [
 						{
 							"key": "id_vehicle",
-							"value": "11",
+							"value": "13",
 							"type": "text",
 							"description": ""
 						},
 						{
-							"key": "maintenance_name",
-							"value": "tire_rotation",
+							"key": "maintainance_name",
+							"value": "oil_change",
 							"description": "",
 							"type": "text"
 						},
@@ -63,6 +63,50 @@
 				"description": "test\t"
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/maintenance/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/amt/API/maintenance/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"maintenance",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8adf412a-3786-4d11-974f-6b2a498c0c63",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bb19a60d-8397-4a98-8795-473a3fba01d0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

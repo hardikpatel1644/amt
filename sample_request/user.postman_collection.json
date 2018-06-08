@@ -40,7 +40,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost/amt/API/user/list.php",
+					"raw": "http://localhost/amt/API/user/view.php?id=32",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -49,7 +49,13 @@
 						"amt",
 						"API",
 						"user",
-						"list.php"
+						"view.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "32"
+						}
 					]
 				}
 			},
@@ -83,13 +89,13 @@
 						},
 						{
 							"key": "email",
-							"value": "hpca1644@gmail.com",
+							"value": "hpca12121212112122323@gmail.com",
 							"type": "text",
 							"description": ""
 						},
 						{
 							"key": "id",
-							"value": "32",
+							"value": "38",
 							"description": "",
 							"type": "text"
 						}

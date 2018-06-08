@@ -16,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $asPasswordHash = $obModel->generatePasswordHash($ssEmail, $ssPassword); // generate password hash
         $asPost = array_merge($asPost, $asPasswordHash);
         $snUserid = $obModel->insertData($asPost);
-        echo parseJson(array("success" => true, "message" => "Record added successfully."));
+        if ($snUserid != '' && is_integer($snUserid))
+            echo parseJson(array("success" => true, "message" => "Record added successfully."));
+        else
+            echo parseJson(array("error" => true, "message" => "Something went wrong. Please try again."));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));
     }

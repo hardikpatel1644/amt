@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.25-MariaDB - mariadb.org binary distribution
+-- Server version:               10.1.26-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
 -- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
@@ -11,11 +11,11 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table amt.maintainance
-CREATE TABLE IF NOT EXISTS `maintainance` (
+-- Dumping structure for table amt.maintenance
+CREATE TABLE IF NOT EXISTS `maintenance` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_vehicle` int(11) NOT NULL DEFAULT '0',
-  `maintainance_name` enum('oil_change','tire_rotation','summer_tires','winter_tires','repair_and_maintenance','car_washing','wheel_alignment','break_inspection') COLLATE utf8_bin DEFAULT NULL,
+  `maintenance_name` enum('oil_change','tire_rotation','summer_tires','winter_tires','repair_and_maintenance','car_washing','wheel_alignment','break_inspection') COLLATE utf8_bin DEFAULT NULL,
   `cost` float NOT NULL DEFAULT '0',
   `description` text COLLATE utf8_bin,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS `maintainance` (
   CONSTRAINT `fk_id_vehicle` FOREIGN KEY (`id_vehicle`) REFERENCES `vehicle` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Dumping data for table amt.maintainance: ~0 rows (approximately)
-DELETE FROM `maintainance`;
-/*!40000 ALTER TABLE `maintainance` DISABLE KEYS */;
-/*!40000 ALTER TABLE `maintainance` ENABLE KEYS */;
+-- Dumping data for table amt.maintenance: ~0 rows (approximately)
+DELETE FROM `maintenance`;
+/*!40000 ALTER TABLE `maintenance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `maintenance` ENABLE KEYS */;
 
 -- Dumping structure for table amt.user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `user_type`, `first_name`, `last_name`, `email`, `password`, `salt`, `token`, `created_at`, `updated_at`, `active`) VALUES
-	(32, 'admin', 'Hardikkumar', 'Patel', 'hpca1644@gmail.com', '883cc717df533db5a132fa2e5289e49f23f0edde', 'a3307fa9e38b68bb07ef6f0957658108', '0f6d96d17323a64acb2ef37e8e927381', '2018-06-06 15:52:13', '2018-06-06 17:18:53', '1'),
+	(32, 'admin', 'Hardikkumar', 'Patel', 'hpca1644@gmail.com', '883cc717df533db5a132fa2e5289e49f23f0edde', 'a3307fa9e38b68bb07ef6f0957658108', 'fc988449032127acb593fe648ff87143', '2018-06-06 15:52:13', '2018-06-07 10:45:09', '1'),
 	(34, 'admin', 'Hardikkumar12334', 'Patel123123', 'hpca164412@gmail.com', '574dd9b5aa243442df96ba6c4a907701b175d5cc', 'c7f55c418b68d55858abdc0f58cdaf0b', NULL, '2018-06-06 16:51:27', '2018-06-06 16:51:27', '1'),
 	(35, 'admin', 'Hardikkumar12334', 'Patel123123', 'hpca1644122213213@gmail.com', '7f25acbec159774a2fedde98fcb2bc2e8197e30b', 'dba3f2d061db55b7cc152746118e0c70', NULL, '2018-06-06 17:01:19', '2018-06-06 17:01:19', '1'),
 	(36, 'admin', 'Hardikkumar12334', 'Patel123123', 'hpca1644122213213@gmail.com', '7f25acbec159774a2fedde98fcb2bc2e8197e30b', 'dba3f2d061db55b7cc152746118e0c70', NULL, '2018-06-06 17:01:28', '2018-06-06 17:01:28', '1'),
@@ -80,11 +80,14 @@ CREATE TABLE IF NOT EXISTS `vehicle` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `fk_id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Dumping data for table amt.vehicle: ~0 rows (approximately)
+-- Dumping data for table amt.vehicle: ~2 rows (approximately)
 DELETE FROM `vehicle`;
 /*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
+INSERT INTO `vehicle` (`id`, `id_user`, `company`, `model`, `model_year`, `vehicle_type`, `licence_plate`, `color`, `vin_no`, `transmission`, `body_type`, `last_odometer`, `created_at`, `updated_at`, `active`) VALUES
+	(13, 32, 'Test12Toekn', 'Test12Toekn', 2006, '', 'BQR456', 'Black', '4TWEEG344GEDFSF234434', 'automatic', 'sedan', 120000, '2018-06-07 11:04:19', '2018-06-07 11:04:19', '1'),
+	(14, 32, 'Test12Toekn', 'Test12Toekn', 2006, '', 'BQR456', 'Black', '4TWEEG344GEDFSF234434', 'automatic', 'sedan', 120000, '2018-06-07 11:05:40', '2018-06-07 11:05:40', '1');
 /*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

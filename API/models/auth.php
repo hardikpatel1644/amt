@@ -30,11 +30,14 @@ class Auth extends User_model {
             $ssToken = "";
             $asUser = $this->getByField('email', $ssEmail);
             $asPasswordHash = $this->generatePasswordHash($ssEmail, $ssPassword);
-            if ($asUser->password == $asPasswordHash['password']) {
-                $ssToken = $this->setToken($asUser->id);
-                $_SESSION['TOKEN'] = $ssToken;
+            if (isset($asUser) && count($asUser)) {
+                if ($asUser->password == $asPasswordHash['password']) {
+                    $ssToken = $this->setToken($asUser->id);
+                    $_SESSION['TOKEN'] = $ssToken;
+                }
+                return $ssToken;
             }
-            return $ssToken;
+            return false;
         }
         return false;
     }
@@ -67,11 +70,19 @@ class Auth extends User_model {
      * @return string
      */
     public function getToken() {
+
+
         $headers = apache_request_headers();
-        if (isset($headers['TOKEN']) && $headers['TOKEN'] != '') {
-            return $headers['TOKEN'];
+        if (isset($_SESSION['TOKEN']) && $_SESSION['TOKEN'] != '') {
+            return $_SESSION['TOKEN'];
         } else
             return false;
+
+        /* $headers = apache_request_headers();
+          if (isset($headers['TOKEN']) && $headers['TOKEN'] != '') {
+          return $headers['TOKEN'];
+          } else
+          return false; */
     }
 
     /**
@@ -110,6 +121,14 @@ class Auth extends User_model {
             $asHash['password'] = $ssGeneratedPassword;
         }
         return $asHash;
+    }
+
+    /**
+     * Function to remove token from session 
+     */
+    public function logout() {
+        $_SESSION['TOKEN'] = '';
+        return true;
     }
 
 }
