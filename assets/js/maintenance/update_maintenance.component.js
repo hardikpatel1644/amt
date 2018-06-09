@@ -1,15 +1,15 @@
-// component that contains the logic to update a user
-window.UpdateUserComponent = React.createClass({
+// component that contains the logic to update a maintenance
+window.UpdateMaintenanceComponent = React.createClass({
     // initial component states will be here
     getInitialState: function() {
-    // Get this user fields from the data attributes we set on the
+    // Get this maintenance fields from the data attributes we set on the
     // #content div, using jQuery
     return {
         first_name: '',
         last_name: '',
         email: '',
         password: '',
-        user_type: '',
+        maintenance_type: '',
         active: '',
         messageCreation: null,
         message: null,
@@ -20,21 +20,21 @@ window.UpdateUserComponent = React.createClass({
 
 componentDidMount: function(){
  
-    // read one user data
+    // read one maintenance data
     var id = this.props.id;
-    this.serverRequestProd = $.get("http://localhost/amt/API/user/view.php?id=" + id,
-        function (user) {
-            user = user.data;
-            this.setState({id: user.id});
-            this.setState({first_name: user.first_name});
-            this.setState({last_name: user.last_name});
-            this.setState({email: user.email});
+    this.serverRequestProd = $.get("http://localhost/amt/API/maintenance/view.php?id=" + id,
+        function (maintenance) {
+            maintenance = maintenance.data;
+            this.setState({id: maintenance.id});
+            this.setState({first_name: maintenance.first_name});
+            this.setState({last_name: maintenance.last_name});
+            this.setState({email: maintenance.email});
             this.setState({password: ''});
-            this.setState({user_type: user.user_type});
-            this.setState({active: user.active});
+            this.setState({maintenance_type: maintenance.maintenance_type});
+            this.setState({active: maintenance.active});
         }.bind(this));
  
-    $('.page-header h1').text('Update user');
+    $('.page-header h1').text('Update maintenance');
 },
  
 
@@ -57,8 +57,8 @@ componentWillUnmount: function() {
         this.setState({password: e.target.value});
         },
 
-        onUsertypeChange: function(e) {
-        this.setState({user_type: e.target.value});
+        onMaintenancetypeChange: function(e) {
+        this.setState({maintenance_type: e.target.value});
         },
         
         onActiveChange: function(e) {
@@ -76,13 +76,13 @@ onSave: function(e){
         last_name: this.state.last_name,
         email: this.state.email,
         password: this.state.password,
-        user_type: this.state.user_type,
+        maintenance_type: this.state.maintenance_type,
         active: this.state.active,
     };
  
     // submit form data to api
     $.ajax({
-        url: "http://localhost/amt/API/user/update.php",
+        url: "http://localhost/amt/API/maintenance/update.php",
         type : "PUT",
        // contentType : 'application/json',
         data : form_data,
@@ -130,7 +130,7 @@ render: function() {
             <a href='#'
                 onClick={() => this.props.changeAppMode('read')}
                 className='btn btn-primary margin-bottom-1em'>
-                Users
+                Maintenances
             </a>
  
             <form onSubmit={this.onSave}>
@@ -185,15 +185,15 @@ render: function() {
                 </tr>
 
                 <tr>
-                    <td>User type</td>
+                    <td>Maintenance type</td>
                     <td>
                         <select
-                            onChange={this.onUsertypeChange}
+                            onChange={this.onMaintenancetypeChange}
                             className='form-control'
-                            value={this.state.user_type}
+                            value={this.state.maintenance_type}
                             required
                             >
-                            <option value="">Select User type...</option>
+                            <option value="">Select Maintenance type...</option>
                             <option value="admin">Admin</option>
                             <option value="customer">Customer</option>
                         </select>

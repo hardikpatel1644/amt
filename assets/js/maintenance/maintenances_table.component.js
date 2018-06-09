@@ -1,13 +1,13 @@
-// component for the whole users table
-window.UsersTable = React.createClass({
+// component for the whole maintenances table
+window.MaintenancesTable = React.createClass({
     render: function () {
 
-        var rows = this.props.users
-                .map(function (user, i) {
+        var rows = this.props.maintenances
+                .map(function (maintenance, i) {
                     return (
-                            <UserRow
+                            <MaintenanceRow
                                 key={i}
-                                user={user}
+                                maintenance={maintenance}
                                 changeAppMode={this.props.changeAppMode} />
                             );
                 }.bind(this));
@@ -22,7 +22,7 @@ window.UsersTable = React.createClass({
                             <th>Firstname</th>
                             <th>Lastname</th>
                             <th>Email</th>
-                            <th>User Type</th>
+                            <th>Maintenance Type</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>

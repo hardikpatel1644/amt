@@ -1,37 +1,37 @@
-// component that contains the logic to read one user
-window.ViewUserComponent = React.createClass({
+// component that contains the logic to read one maintenance
+window.ViewMaintenanceComponent = React.createClass({
     getInitialState: function () {
-        // Get this user fields from the data attributes we set on the
+        // Get this maintenance fields from the data attributes we set on the
         // #content div, using jQuery
         return {
             id: '',
             first_name: '',
             last_name: '',
             email: '',
-            user_type: '',
+            maintenance_type: '',
             active: ''
         };
     },
 
-// on mount, read user data and them as this component's state
+// on mount, read maintenance data and them as this component's state
     componentDidMount: function () {
 
         var id = this.props.id;
 
-        this.serverRequestProd = $.get("http://localhost/amt/API/user/view.php?id=" + id,
-                function (user) {
-                    user = user.data;
-                    this.setState({id: user.id});
-                    this.setState({first_name: user.first_name});
-                    this.setState({last_name: user.last_name});
-                    this.setState({email: user.email});
+        this.serverRequestProd = $.get("http://localhost/amt/API/maintenance/view.php?id=" + id,
+                function (maintenance) {
+                    maintenance = maintenance.data;
+                    this.setState({id: maintenance.id});
+                    this.setState({first_name: maintenance.first_name});
+                    this.setState({last_name: maintenance.last_name});
+                    this.setState({email: maintenance.email});
                     this.setState({password: ''});
-                    this.setState({user_type: user.user_type});
-                    this.setState({active: user.active});
+                    this.setState({maintenance_type: maintenance.maintenance_type});
+                    this.setState({active: maintenance.active});
                 }.bind(this));
 
 
-        $('.page-header h1').text('View User');
+        $('.page-header h1').text('View Maintenance');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
@@ -48,7 +48,7 @@ window.ViewUserComponent = React.createClass({
                     <a href='#'
                        onClick={() => this.props.changeAppMode('read')}
                        className='btn btn-primary margin-bottom-1em'>
-                        Users
+                        Maintenances
                     </a>
                 
                     <form onSubmit={this.onSave}>
@@ -70,11 +70,11 @@ window.ViewUserComponent = React.createClass({
                                 </tr>
                 
                                 <tr>
-                                    <td>User type</td>
-                                    <td>{this.state.user_type}</td>
+                                    <td>Maintenance type</td>
+                                    <td>{this.state.maintenance_type}</td>
                                 </tr>
                                 <tr>
-                                    <td>User type</td>
+                                    <td>Maintenance type</td>
                                     <td>{this.state.active == "1" ? "Yes" : "No"}</td>
                                 </tr>
                             </tbody>

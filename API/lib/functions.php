@@ -23,8 +23,8 @@ function parseJson($asData) {
 function cleanInputs($asData) {
     $asCleanInput = array();
     if (is_array($asData)) {
-        foreach ($asData as $k => $v) {
-            $asCleanInput[$k] = cleanInputs($v);
+        foreach ($asData as $ssKey => $ssVal) {
+            $asCleanInput[$ssKey] = cleanInputs($ssVal);
         }
     } else {
         if (get_magic_quotes_gpc()) {
@@ -34,4 +34,31 @@ function cleanInputs($asData) {
         $asCleanInput = trim($asData);
     }
     return $asCleanInput;
+}
+
+/**
+ * Validate fields
+ * @param type $asData
+ */
+function validateFields($asData = array()) {
+    if (is_array($asData)) {
+        $asError = array();
+        foreach ($asData as $ssKey => $ssVal) {
+            if ($ssVal == '') {
+                $asError[$ssKey] = ucfirst(str_replace('_', " ", $ssKey)) . " is required.";
+            }
+        }
+        
+      
+
+        if (count($asError) > 0) {
+            $ssErrorStr = "<ul>";
+            foreach ($asError as $ssEror) {
+                $ssErrorStr .= "<li>" . $ssEror . "</li>";
+            }
+            $ssErrorStr .= "</ul>";
+            echo parseJson(array("error" => true, "message" => $ssErrorStr));
+            exit;
+        }
+    }
 }

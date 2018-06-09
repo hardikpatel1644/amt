@@ -6,6 +6,7 @@ window.UserRow = React.createClass({
                     <td>{this.props.user.first_name}</td>
                     <td>{this.props.user.last_name}</td>
                     <td>{this.props.user.email}</td>
+                    <td>{this.props.user.active == "1" ? "Yes" : "No"}</td>
                     <td>{this.props.user.user_type}</td>
                     <td>
                         <a href='#'

@@ -13,8 +13,13 @@ if (!$obAuth->validateToken()) {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     try {
         $asPost = cleanInputs($_POST);
+        $asPost['id_user'] = $_SESSION['id_user'];
+        validateFields($asPost);
         $snId = $obModel->insertData($asPost);
-        echo parseJson(array("success" => true, "message" => "Record added successfully."));
+        if ($snId != '' && is_integer($snId))
+            echo parseJson(array("success" => true, "message" => "Record added successfully."));
+        else
+            echo parseJson(array("error" => true, "message" => "Something went wrong. Please try again."));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));
     }

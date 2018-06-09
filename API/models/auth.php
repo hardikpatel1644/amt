@@ -34,6 +34,7 @@ class Auth extends User_model {
                 if ($asUser->password == $asPasswordHash['password']) {
                     $ssToken = $this->setToken($asUser->id);
                     $_SESSION['TOKEN'] = $ssToken;
+                    $_SESSION['id_user'] = $asUser->id;
                 }
                 return $ssToken;
             }
@@ -71,8 +72,6 @@ class Auth extends User_model {
      */
     public function getToken() {
 
-
-        $headers = apache_request_headers();
         if (isset($_SESSION['TOKEN']) && $_SESSION['TOKEN'] != '') {
             return $_SESSION['TOKEN'];
         } else
@@ -128,6 +127,7 @@ class Auth extends User_model {
      */
     public function logout() {
         $_SESSION['TOKEN'] = '';
+        $_SESSION['id_user'] = '';
         return true;
     }
 

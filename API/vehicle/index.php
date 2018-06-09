@@ -12,7 +12,7 @@ if (!$obAuth->validateToken()) {
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     try {
-        $asList = $obModel->getAll();
+        $asList = $obModel->getByField('id_user',$_SESSION['id_user'],1);
         echo parseJson(array("success" => true, "data" => $asList));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));

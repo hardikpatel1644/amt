@@ -15,6 +15,7 @@ first_name: '',
         email: '',
         password: '',
         user_type: '',
+          active: '',
         messageCreation: null,
         message: null
 };
@@ -48,6 +49,10 @@ first_name: '',
         onUsertypeChange: function(e) {
         this.setState({user_type: e.target.value});
         },
+        
+       onActiveChange: function(e) {
+        this.setState({active: e.target.value});
+        },
 // handle save button here
 
 // handle save button clicked
@@ -60,6 +65,7 @@ first_name: '',
                 email: this.state.email,
                 password: this.state.password,
                 user_type: this.state.user_type,
+                active: this.state.active,
         };
                 // submit form data to api
                 $.ajax({
@@ -76,16 +82,18 @@ first_name: '',
                         if(response['success'] == true)
                         {
                             this.setState({messageCreation: "success"});
-                        }
-                        
-                        // api message
-                        this.setState({message: response['message']});
-                                // empty form
+                            // empty form
                                 this.setState({first_name: ""});
                                 this.setState({last_name: ""});
                                 this.setState({email: ""});
                                 this.setState({password: ""});
                                 this.setState({user_type: ""});
+                                this.setState({active: ""});
+                        }
+                        
+                        // api message
+                        this.setState({message: response['message']});
+                                
                         }.bind(this),
                         error: function(xhr, response, text){
                         // show error to console
@@ -180,9 +188,10 @@ first_name: '',
                     <td>User type</td>
                     <td>
                         <select
-                            onChange={this.onUsertypeChange}
+                           
                             className='form-control'
-                            value=""
+                            value={this.state.user_type}
+                             onChange={this.onUsertypeChange}
                             required
                             >
                             <option value="">Select User type...</option>
@@ -191,7 +200,21 @@ first_name: '',
                         </select>
                     </td>
                 </tr>
-
+             <tr>
+                    <td>Active</td>
+                    <td>
+                        <select
+                            onChange={this.onActiveChange}
+                            className='form-control'
+                             value={this.state.active}
+                            required
+                            >
+                            <option value="">Select Status...</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                </tr>
                 <tr>
                     <td></td>
                     <td>

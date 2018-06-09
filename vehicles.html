@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Automobile Maintenance : Users </title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+
+        <!-- CSS -->
+        <link href="assets/css/styles.css" rel="stylesheet" type="text/css"/>
+
+    </head>
+    <body>
+
+        <!-- container -->
+        <div class="container">
+
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Automobile Maintenance</a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.html">Home</a></li>
+                            <li ><a href="users.html">Users</a></li>
+                            <li class="active"><a href="vehicles.html">Vehicles</a></li>
+                        </ul>
+                        <button  class="logout btn btn-primary" onclick="logout();">Logout</button>
+                    </div><!--/.nav-collapse -->
+
+                </div>
+            </nav>
+
+            <div class="page-header">
+                <h1>Loading...</h1>
+            </div>
+
+            <!-- placeholder for rendering react components -->
+            <div id='content'></div>
+
+        </div>
+        <!-- /container -->
+
+        <!-- react js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+        <!-- react code -->
+        <script type="text/babel" src="assets/js/top_actions.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/vehicles.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/vehicles_table.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/vehicle_table_row.component.js" ></script>
+
+        <script type="text/babel" src="assets/js/vehicle/create_vehicle.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/main.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/view_vehicle.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/delete_vehicle.component.js" ></script>
+        <script type="text/babel" src="assets/js/vehicle/update_vehicle.component.js" ></script>
+        <!-- jQuery library required by bootsrap js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+
+                            function logout()
+                            {
+                                $.ajax({url: "http://localhost/amt/API/user/logout.php", success: function (response) {
+                                        if (response.success == true && response.message =='Logout successfully.')
+                                        {
+                                            location.href = "http://localhost/amt";
+                                        }
+
+                                    }});
+                            }
+        </script>
+
+    </body>
+</html>

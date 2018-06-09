@@ -12,9 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $asPost = cleanInputs($_POST);
         $ssEmail = $asPost['email'];
         $ssPassword = $asPost['password'];
+
         $obModel->isUnique('email', $ssEmail, 0); // check for unique record
         $asPasswordHash = $obModel->generatePasswordHash($ssEmail, $ssPassword); // generate password hash
         $asPost = array_merge($asPost, $asPasswordHash);
+        validateFields($asPost);
         $snUserid = $obModel->insertData($asPost);
         if ($snUserid != '' && is_integer($snUserid))
             echo parseJson(array("success" => true, "message" => "Record added successfully."));

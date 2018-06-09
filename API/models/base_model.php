@@ -31,7 +31,7 @@ class Base_model extends Db {
      * @return array
      */
     public function getAll() {
-        $ssQuery = "SELECT * FROM {$this->ssTableName}";
+        $ssQuery = "SELECT * FROM {$this->ssTableName} ORDER by id DESC";
         $ssFields = array();
         return $this->obDb->getData($ssQuery, $ssFields);
     }
@@ -43,7 +43,7 @@ class Base_model extends Db {
      */
     public function getById($id = '') {
         if ($id != '') {
-            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE id= :id";
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE id= :id ORDER BY id DESC";
             $ssFields = array("id" => $id);
             return $this->obDb->getOneData($ssQuery, $ssFields);
         }
@@ -59,7 +59,7 @@ class Base_model extends Db {
     public function getByField($ssField = '', $ssValue = '', $ssFlag = 0) {
 
         if ($ssField != '' && $ssValue != '') {
-            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "=:value";
+            $ssQuery = "SELECT * FROM {$this->ssTableName} WHERE " . $ssField . "=:value ORDER BY id DESC";
             $ssFields = array("value" => $ssValue);
             return $this->obDb->getOneData($ssQuery, $ssFields, $ssFlag);
         }
@@ -181,7 +181,7 @@ class Base_model extends Db {
             $snCount = $this->getCount($ssField, $ssValue, $ssFlag);
             if ($ssFlag == 1) {
 
-                if ($snCount >= 1) { // check for update time 
+                if ($snCount > 1) { // check for update time 
                     echo parseJson(array("error" => true, "message" => "edit:Record alredy exist."));
                     exit;
                 }

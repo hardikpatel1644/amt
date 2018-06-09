@@ -1,47 +1,35 @@
-// component that contains the logic to update a user
-window.UpdateUserComponent = React.createClass({
-    // initial component states will be here
-    getInitialState: function() {
-    // Get this user fields from the data attributes we set on the
-    // #content div, using jQuery
-    return {
-        first_name: '',
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+window.CreateMaintenanceComponent = React.createClass({
+// initialize values
+getInitialState: function() {
+return {
+
+first_name: '',
         last_name: '',
         email: '',
         password: '',
-        user_type: '',
-        active: '',
+        maintenance_type: '',
         messageCreation: null,
-        message: null,
-        successUpdate: null
-    };
+        message: null
+};
 },
- 
+// on mount, get all categories and store them in this component's state
+        componentDidMount: function() {
+       
+                $('.page-header h1').text('Add new');
+        },
 
-componentDidMount: function(){
- 
-    // read one user data
-    var id = this.props.id;
-    this.serverRequestProd = $.get("http://localhost/amt/API/user/view.php?id=" + id,
-        function (user) {
-            user = user.data;
-            this.setState({id: user.id});
-            this.setState({first_name: user.first_name});
-            this.setState({last_name: user.last_name});
-            this.setState({email: user.email});
-            this.setState({password: ''});
-            this.setState({user_type: user.user_type});
-            this.setState({active: user.active});
-        }.bind(this));
- 
-    $('.page-header h1').text('Update user');
-},
- 
+        componentWillUnmount: function() {
+        this.serverRequest.abort();
+        },
 
-componentWillUnmount: function() {
-    this.serverRequestProd.abort();
-},
-  onFirstnameChange: function(e) {
+        onFirstnameChange: function(e) {
         this.setState({first_name: e.target.value});
         },
 
@@ -57,38 +45,31 @@ componentWillUnmount: function() {
         this.setState({password: e.target.value});
         },
 
-        onUsertypeChange: function(e) {
-        this.setState({user_type: e.target.value});
+        onMaintenancetypeChange: function(e) {
+        this.setState({maintenance_type: e.target.value});
         },
-        
-        onActiveChange: function(e) {
-        this.setState({active: e.target.value});
-        },
- 
-// handle save changes button here
-// handle save changes button clicked
-onSave: function(e){
- 
-    // data in the form
-    var form_data={
-        id: this.state.id,
+// handle save button here
+
+// handle save button clicked
+        onSave: function(e){
+
+        // data in the form
+        var form_data = {
         first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        email: this.state.email,
-        password: this.state.password,
-        user_type: this.state.user_type,
-        active: this.state.active,
-    };
- 
-    // submit form data to api
-    $.ajax({
-        url: "http://localhost/amt/API/user/update.php",
-        type : "PUT",
-       // contentType : 'application/json',
-        data : form_data,
-        success : function(response) {
-            
-            if(response['error'] == true)
+                last_name: this.state.last_name,
+                email: this.state.email,
+                password: this.state.password,
+                maintenance_type: this.state.maintenance_type,
+        };
+                // submit form data to api
+                $.ajax({
+                url: "http://localhost/amt/API/maintenance/create.php",
+                        type : "POST",
+                        //contentType : 'application/json',
+                        data : form_data,
+                        success : function(response) {
+
+                        if(response['error'] == true)
                         {
                             this.setState({messageCreation: "error"});
                         }
@@ -96,26 +77,37 @@ onSave: function(e){
                         {
                             this.setState({messageCreation: "success"});
                         }
-                            this.setState({message: response['message']});
-            
-        }.bind(this),
-        error: function(xhr, resp, text){
-            // show error to console
-            console.log(xhr, resp, text);
-        }
-    });
- 
-    e.preventDefault();
-},
- 
+                        
+                        // api message
+                        this.setState({message: response['message']});
+                                // empty form
+                                this.setState({first_name: ""});
+                                this.setState({last_name: ""});
+                                this.setState({email: ""});
+                                this.setState({password: ""});
+                                this.setState({maintenance_type: ""});
+                        }.bind(this),
+                        error: function(xhr, response, text){
+                        // show error to console
+                                console.log(xhr, resp, text);
+                        }
+                });
+                e.preventDefault();
+                },
 // render component here
-render: function() {
-    
- 
-    return (
-        <div>
-{
-            this.state.messageCreation == "success" ?
+        render: function() {
+
+        /*
+         - tell the maintenance if a maintenance was created
+         - tell the maintenance if unable to create maintenance
+         - button to go back to maintenances list
+         - form to create a maintenance
+         */
+        return (
+<div>
+    {
+
+                this.state.messageCreation == "success" ?
     <div className='alert alert-success' dangerouslySetInnerHTML={{__html: this.state.message}}></div>
                 : null
     }
@@ -126,14 +118,14 @@ render: function() {
     <div className='alert alert-danger' dangerouslySetInnerHTML={{__html: this.state.message}}></div>
                 : null
     }
- 
-            <a href='#'
-                onClick={() => this.props.changeAppMode('read')}
-                className='btn btn-primary margin-bottom-1em'>
-                Users
-            </a>
- 
-            <form onSubmit={this.onSave}>
+
+    <a href='#'
+       onClick={() => this.props.changeAppMode('read')}
+       className='btn btn-primary margin-bottom-1em'> Maintenances
+    </a>
+
+
+    <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
                 <tr>
@@ -185,38 +177,20 @@ render: function() {
                 </tr>
 
                 <tr>
-                    <td>User type</td>
+                    <td>Maintenance type</td>
                     <td>
                         <select
-                            onChange={this.onUsertypeChange}
+                            onChange={this.onMaintenancetypeChange}
                             className='form-control'
-                            value={this.state.user_type}
+                            value=""
                             required
                             >
-                            <option value="">Select User type...</option>
+                            <option value="">Select Maintenance type...</option>
                             <option value="admin">Admin</option>
                             <option value="customer">Customer</option>
                         </select>
                     </td>
                 </tr>
-
-
-                <tr>
-                    <td>Active</td>
-                    <td>
-                        <select
-                            onChange={this.onActiveChange}
-                            className='form-control'
-                             value={this.state.active}
-                            required
-                            >
-                            <option value="">Select Status...</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </td>
-                </tr>
-
 
                 <tr>
                     <td></td>
@@ -229,7 +203,7 @@ render: function() {
             </tbody>
         </table>
     </form>
-        </div>
-    );
-}
+</div>
+                );
+                }
 });

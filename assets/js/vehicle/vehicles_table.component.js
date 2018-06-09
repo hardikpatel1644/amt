@@ -1,14 +1,15 @@
-// component for the whole users table
-window.UsersTable = React.createClass({
+// component for the whole vehicles table
+window.VehiclesTable = React.createClass({
     render: function () {
 
-        var rows = this.props.users
-                .map(function (user, i) {
+        var rows = this.props.vehicles
+                .map(function (vehicle, i) {
                     return (
-                            <UserRow
+                            <VehicleRow
                                 key={i}
-                                user={user}
-                                changeAppMode={this.props.changeAppMode} />
+                                vehicle={vehicle}
+                                changeAppMode={this.props.changeAppMode} 
+                                />
                             );
                 }.bind(this));
 
@@ -19,10 +20,10 @@ window.UsersTable = React.createClass({
                 <table className='table table-bordered table-hover'>
                     <thead>
                         <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                            <th>User Type</th>
+                            <th>Company</th>
+                            <th>Model</th>
+                            <th>Model Year</th>
+                            <th>Vehicle Type</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>
