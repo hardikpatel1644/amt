@@ -18,7 +18,6 @@ getInitialState: function() {
 },
         // used when use clicks something that changes the current mode
         changeAppMode: function(newMode, id) {
-                     
             this.setState({currentMode: newMode});
             if (id !== undefined) {
                 this.setState({id: id});
@@ -32,12 +31,9 @@ getInitialState: function() {
                   
                     switch (this.state.currentMode){
                           case 'read':
-                    break;
+                    break;  
                     case 'view':
                     modeComponent = < ViewVehicleComponent id = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
-                    break;
-                    case 'view_all_maintenance':
-                    modeComponent = < ViewMaintenanceComponent id_vehicle = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
                     break;
                     case 'create':
                     modeComponent = < CreateVehicleComponent changeAppMode = {this.changeAppMode} / > ;
@@ -47,6 +43,20 @@ getInitialState: function() {
                     break;
                     case 'delete':
                     modeComponent = < DeleteVehicleComponent id = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
+                    break;
+                      
+                    case 'view_maintenance':
+                    modeComponent = < ViewMaintenanceComponent id = {this.state.id} id_vehicle = {this.state.id_vehicle} changeAppMode = {this.changeAppMode} / > ;
+                    break;
+                    
+                    case 'create_maintenance':
+                    modeComponent = < CreateMaintenanceComponent id_vehicle = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
+                    break;
+                    case 'update_maintenance':
+                    modeComponent = < UpdateMaintenanceComponent id = {this.state.id}  id_vehicle = {this.state.id_vehicle} changeAppMode = {this.changeAppMode} / > ;
+                    break;
+                    case 'delete_maintenance':
+                    modeComponent = < DeleteMaintenanceComponent id = {this.state.id} id_vehicle = {this.state.id_vehicle} changeAppMode = {this.changeAppMode} / > ;
                     break;
                     default:
                     break;

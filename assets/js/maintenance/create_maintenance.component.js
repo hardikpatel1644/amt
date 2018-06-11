@@ -9,45 +9,44 @@ window.CreateMaintenanceComponent = React.createClass({
 // initialize values
 getInitialState: function() {
 return {
-
-first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        maintenance_type: '',
+     
+        id_vehicle: '',
+        maintenance_name: '',
+        cost: '',
+        description: '',
+        active: '',
         messageCreation: null,
         message: null
 };
 },
-// on mount, get all categories and store them in this component's state
+// on mount, 
         componentDidMount: function() {
-       
                 $('.page-header h1').text('Add new');
         },
 
         componentWillUnmount: function() {
-        this.serverRequest.abort();
+            this.serverRequest.abort();
+        },
+       onId_vechilceChange: function(e) {
+        this.setState({id_vehicle: e.target.value});
         },
 
-        onFirstnameChange: function(e) {
-        this.setState({first_name: e.target.value});
+        onMaintenance_nameChange: function(e) {
+        this.setState({maintenance_name: e.target.value});
         },
 
-        onLastnameChange: function(e) {
-        this.setState({last_name: e.target.value});
+        onCostChange: function(e) {
+        this.setState({cost: e.target.value});
         },
 
-        onEmailChange: function(e) {
-        this.setState({email: e.target.value});
+        onDescriptionChange: function(e) {
+        this.setState({description: e.target.value});
         },
 
-        onPasswordChange: function(e) {
-        this.setState({password: e.target.value});
+        onActiveChange: function(e) {
+        this.setState({active: e.target.value});
         },
 
-        onMaintenancetypeChange: function(e) {
-        this.setState({maintenance_type: e.target.value});
-        },
 // handle save button here
 
 // handle save button clicked
@@ -55,11 +54,11 @@ first_name: '',
 
         // data in the form
         var form_data = {
-        first_name: this.state.first_name,
-                last_name: this.state.last_name,
-                email: this.state.email,
-                password: this.state.password,
-                maintenance_type: this.state.maintenance_type,
+                id_vehicle: this.props.id_vehicle,
+                maintenance_name: this.state.maintenance_name,
+                cost: this.state.cost,
+                description: this.state.description,
+                active: this.state.active,
         };
                 // submit form data to api
                 $.ajax({
@@ -76,17 +75,18 @@ first_name: '',
                         if(response['success'] == true)
                         {
                             this.setState({messageCreation: "success"});
-                        }
-                        
-                        // api message
-                        this.setState({message: response['message']});
+
                                 // empty form
-                                this.setState({first_name: ""});
-                                this.setState({last_name: ""});
-                                this.setState({email: ""});
-                                this.setState({password: ""});
-                                this.setState({maintenance_type: ""});
-                        }.bind(this),
+                                this.setState({maintenance_name: ""});
+                                this.setState({cost: ""});
+                                this.setState({description: ""});
+                                this.setState({active: ""});
+                        }
+                                                    // api message
+                        this.setState({message: response['message']});
+                        
+                        
+                       }.bind(this),
                         error: function(xhr, response, text){
                         // show error to console
                                 console.log(xhr, resp, text);
@@ -96,7 +96,7 @@ first_name: '',
                 },
 // render component here
         render: function() {
-
+            
         /*
          - tell the maintenance if a maintenance was created
          - tell the maintenance if unable to create maintenance
@@ -106,92 +106,82 @@ first_name: '',
         return (
 <div>
     {
-
-                this.state.messageCreation == "success" ?
-    <div className='alert alert-success' dangerouslySetInnerHTML={{__html: this.state.message}}></div>
-                : null
+        this.state.messageCreation == "success" ?<div className='alert alert-success' dangerouslySetInnerHTML={{__html: this.state.message}}></div>: null
     }
-
     {
-
-                this.state.messageCreation == "error" ?
-    <div className='alert alert-danger' dangerouslySetInnerHTML={{__html: this.state.message}}></div>
-                : null
+        this.state.messageCreation == "error" ?<div className='alert alert-danger' dangerouslySetInnerHTML={{__html: this.state.message}}></div>: null
     }
 
     <a href='#'
-       onClick={() => this.props.changeAppMode('read')}
-       className='btn btn-primary margin-bottom-1em'> Maintenances
+       onClick={() => this.props.changeAppMode('view',this.props.id_vehicle)}
+       className='btn btn-primary margin-bottom-1em'> Back
     </a>
-
 
     <form onSubmit={this.onSave}>
         <table className='table table-bordered table-hover'>
             <tbody>
+         
                 <tr>
-                    <td>Firstname</td>
+                    <td>Maintenance name</td>
                     <td>
-                        <input
-                            type='text'
-                            className='form-control'
-                            value={this.state.first_name}
-                            required
-                            onChange={this.onFirstnameChange} />
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Lastname</td>
-                    <td>
-                        <input
-                            type='text'
-                            className='form-control'
-                            value={this.state.last_name}
-                            required
-                            onChange={this.onLastnameChange} />
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Email</td>
-                    <td>
-                        <input
-                            type='email'
-                            className='form-control'
-                            value={this.state.email}
-                            required
-                            onChange={this.onEmailChange}/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Password</td>
-                    <td>
-                        <input
-                            type='password'
-                            className='form-control'
-                            value={this.state.password}
-                            required
-                            onChange={this.onPasswordChange}/>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Maintenance type</td>
-                    <td>
+                      
                         <select
-                            onChange={this.onMaintenancetypeChange}
+                            onChange={this.onMaintenance_nameChange}
                             className='form-control'
-                            value=""
+                            value={this.state.maintenance_name}
                             required
                             >
-                            <option value="">Select Maintenance type...</option>
-                            <option value="admin">Admin</option>
-                            <option value="customer">Customer</option>
+                            <option value="">Select Maintenance...</option>
+                            <option value="oil_change">Oil chnage</option>
+                            <option value="tire_rotation">Tire rotation</option>
+                            <option value="summer_tires">Summer tires</option>
+                            <option value="winter_tires">Winter tires</option>
+                            <option value="repair_and_maintenance">Repair and maintenance</option>
+                            <option value="car_washing">Car washing</option>
+                            <option value="wheel_alignment">Wheel alignment</option>
+                            <option value="break_inspection">Break inspection</option>
                         </select>
                     </td>
                 </tr>
 
+                <tr>
+                    <td>Cost</td>
+                    <td>
+                        <input
+                            type='text'
+                            className='form-control'
+                            value={this.state.cost}
+                            required
+                            onChange={this.onCostChange} />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <input
+                            type='text'
+                            className='form-control'
+                            value={this.state.description}
+                            required
+                            onChange={this.onDescriptionChange}/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Active</td>
+                    <td>
+                        <select
+                            onChange={this.onActiveChange}
+                            className='form-control'
+                             value={this.state.active}
+                            required
+                            >
+                            <option value="">Select Status...</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                </tr>
                 <tr>
                     <td></td>
                     <td>

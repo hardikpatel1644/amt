@@ -14,11 +14,6 @@ window.VehicleRow = React.createClass({
                            onClick={() => this.props.changeAppMode('view', this.props.vehicle.id)}
                            className='btn btn-info m-r-1em'> View
                         </a>
-                
-                       <a href='#'
-                            onClick={() => this.props.changeAppMode('view_all_maintenance', this.props.vehicle.id)}
-                           className='btn btn-info m-r-1em'> View Maintenance
-                        </a>
                         <a href='#'
                            onClick={() => this.props.changeAppMode('update', this.props.vehicle.id)}
                            className='btn btn-primary m-r-1em'> Edit

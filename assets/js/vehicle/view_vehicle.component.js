@@ -15,7 +15,9 @@ window.ViewVehicleComponent = React.createClass({
             transmission: '',
             body_type: '',
             last_odometer: '',
-            active: ''
+            active: '',
+            maintenances:[]
+            
         };
     },
 
@@ -24,7 +26,7 @@ window.ViewVehicleComponent = React.createClass({
 
         var id = this.props.id;
 
-        this.serverRequestProd = $.get("http://localhost/amt/API/vehicle/view.php?id=" + id,
+        this.serverRequestVehicle = $.get("http://localhost/amt/API/vehicle/view.php?id=" + id,
                 function (vehicle) {
                     vehicle = vehicle.data;
                     this.setState({id: vehicle.id});
@@ -42,18 +44,27 @@ window.ViewVehicleComponent = React.createClass({
                 }.bind(this));
 
 
-        $('.page-header h1').text('View Vehicle');
+        this.serverRequestMaintenance = $.get("http://localhost/amt/API/maintenance/index.php?id_vehicle="+id,
+            function(maintenances)
+            {
+                this.setState({
+                    maintenances: maintenances.data
+                });
+            }.bind(this));        
+                
+        $('.page-header h1').text('Vehicles');
     },
 
 // on unmount, kill categories fetching in case the request is still pending
     componentWillUnmount: function () {
-        this.serverRequestProd.abort();
-
+        this.serverRequestVehicle.abort();
+        this.serverRequestMaintenance.abort();
     },
 
 // render component html will be here
     render: function () {
-
+        
+         var filteredMaintenances = this.state.maintenances;
         return (
                 <div>
                     <a href='#'
@@ -115,7 +126,22 @@ window.ViewVehicleComponent = React.createClass({
                             </tbody>
                         </table>
                     </form>
-                </div>
+            
+            
+                <div className='overflow-hidden' id='maintenanceTable'>
+                    <h1>Maintenances of {this.state.company} {this.state.model}</h1>
+            
+                        <a href='#'
+                           onClick={() => this.props.changeAppMode('create_maintenance', this.state.id)}
+                           className='btn btn-primary m-r-1em'> Add new
+                        </a>
+                <br/>
+                        <MaintenancesTable
+                          maintenances={filteredMaintenances}
+                          changeAppMode={this.props.changeAppMode} 
+                            />
+                  </div>
+            </div>
                 );
     }
 });

@@ -18,6 +18,7 @@ window.DeleteMaintenanceComponent = React.createClass({
     // componentDidMount will be here
     // on mount, change header text
     componentDidMount: function () {
+             //var id_vehicle = this.props.id_vehicle;
         $('.page-header h1').text('Delete Maintenance');
     },
 
@@ -27,6 +28,7 @@ window.DeleteMaintenanceComponent = React.createClass({
 
         // product to delete
         var id = this.props.id;
+
 
         // submit form data to api
         $.ajax({
@@ -43,7 +45,8 @@ window.DeleteMaintenanceComponent = React.createClass({
                 {
                     this.setState({messageCreation: "success"});
                 }
-                this.props.changeAppMode('read');
+                this.props.changeAppMode('view',this.state.id_vehicle);
+                //this.props.changeAppMode('read');
             }.bind(this),
             error: function (xhr, resp, text) {
                 // show error in console
@@ -65,7 +68,7 @@ window.DeleteMaintenanceComponent = React.createClass({
                                 <div className='text-align-center'>
                                     <button onClick={this.onDelete}
                                             className='btn btn-danger m-r-1em'>Yes</button>
-                                    <button onClick={() => this.props.changeAppMode('read')}
+                                    <button  onClick={() => this.props.changeAppMode('view',this.state.id_vehicle)}
                                             className='btn btn-primary'>No</button>
                                 </div>
                             </div>

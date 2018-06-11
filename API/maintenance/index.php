@@ -14,8 +14,12 @@ if (!$obAuth->validateToken()) {
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     try {
-        $asList = $obModel->getAll();
-        echo parseJson(array("success" => true, "data" => $asList));
+        //$asList = $obModel->getAll();
+        if (isset($_GET['id_vehicle']) && $_GET['id_vehicle'] != '') {
+            $asList = $obModel->getByField('id_vehicle', cleanInputs($_GET['id_vehicle']), 1);
+            echo parseJson(array("success" => true, "data" => $asList));
+        } else
+            echo parseJson(array("error" => true, "message" => "Something went wrong. Please try again."));
     } catch (Exception $e) {
         echo parseJson(array("error" => true, "message" => $e->getMessage()));
     }

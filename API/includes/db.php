@@ -73,6 +73,7 @@ class Db {
      * @throws Exception
      */
     protected function getOneData($ssQuery, $ssFields, $ssFlag = 0) {
+       
         try {
             $ssStatement = $this->obDb->prepare($ssQuery);
             $ssStatement->execute($ssFields);

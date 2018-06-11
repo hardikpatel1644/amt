@@ -9,13 +9,11 @@ window.MaintenancesComponent = React.createClass({
 
     // on mount, fetch all maintenances and stored them as this component's state
     componentDidMount: function () {
-
         this.serverRequest = $.get("http://localhost/amt/API/maintenance", function (maintenances) {
             if (maintenances['error'] == true)
             {
                 this.setState({messageCreation: "error"});
             }
-
             this.setState({
                 maintenances: maintenances.data
             });
@@ -36,7 +34,10 @@ window.MaintenancesComponent = React.createClass({
         return (
                 <div>
                     <div className='overflow-hidden'>
-                        <TopActionsComponent changeAppMode={this.props.changeAppMode} />
+                    <a href='#'
+                        onClick={() => this.props.changeAppMode('create')}
+                        className='btn btn-primary margin-bottom-1em'> Add new
+                     </a>
                         <MaintenancesTable
                             maintenances={filteredMaintenances}
                             changeAppMode={this.props.changeAppMode} />

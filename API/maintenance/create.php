@@ -14,7 +14,7 @@ if (!$obAuth->validateToken()) {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     try {
         $asPost = cleanInputs($_POST);
-
+        validateFields($asPost);
         if ($asPost['maintenance_name'] == "oil_change") {
             $obVehicleModel->validateMintainanceType($asPost['id_vehicle']);
         }

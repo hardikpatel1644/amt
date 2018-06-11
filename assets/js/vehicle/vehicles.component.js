@@ -42,7 +42,7 @@ window.VehiclesComponent = React.createClass({
                         <VehiclesTable
                             vehicles={filteredVehicles}
                             changeAppMode={this.props.changeAppMode} 
-                            extraAppMode={this.props.extraAppMode}/>
+                           />
                     </div>
                 </div>
                             );

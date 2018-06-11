@@ -11,12 +11,14 @@ var MainAppMaintenance = React.createClass({
 // initial mode is 'read' mode
 getInitialState: function() {
     return {
-        currentMode: 'read',
+        currentMode: '',
         id: null
     };
 },
         // used when use clicks something that changes the current mode
         changeAppMode: function(newMode, id) {
+            alert(newMode);
+            alert(id);
             this.setState({currentMode: newMode});
             if (id !== undefined) {
                 this.setState({id: id});
@@ -27,22 +29,19 @@ getInitialState: function() {
 
             var modeComponent =
                     <MaintenancesComponent changeAppMode = {this.changeAppMode}/> ;
-                    switch (this.state.currentMode){
-                          case 'read':
+                    
+                    case 'view_maintenance':
+                    modeComponent = < ViewMaintenanceComponent id_vehicle = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
                     break;
-                    case 'view':
-                    modeComponent = < ViewMaintenanceComponent id = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
-                    break;
-                    case 'create':
+                    
+                    case 'create_maintenance':
                     modeComponent = < CreateMaintenanceComponent changeAppMode = {this.changeAppMode} / > ;
                     break;
-                    case 'update':
+                    case 'update_maintenance':
                     modeComponent = < UpdateMaintenanceComponent id = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
                     break;
-                    case 'delete':
+                    case 'delete_maintenance':
                     modeComponent = < DeleteMaintenanceComponent id = {this.state.id} changeAppMode = {this.changeAppMode} / > ;
-                    break;
-                    default:
                     break;
            
         }
@@ -51,7 +50,7 @@ getInitialState: function() {
         }
 });
 // go and render the whole React component on to the div with id 'content'
-        ReactDOM.render(
-                < MainAppMaintenance / > ,
-                document.getElementById('content')
-        );
+      //  ReactDOM.render(
+         //       < MainAppMaintenance / > ,
+             //   document.getElementById('maintenanceTable')
+    //    );

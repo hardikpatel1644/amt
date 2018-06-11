@@ -11,6 +11,7 @@ window.MaintenancesTable = React.createClass({
                                 changeAppMode={this.props.changeAppMode} />
                             );
                 }.bind(this));
+               
 
         return(
                 !rows.length
@@ -19,10 +20,9 @@ window.MaintenancesTable = React.createClass({
                 <table className='table table-bordered table-hover'>
                     <thead>
                         <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Email</th>
-                            <th>Maintenance Type</th>
+                            <th>Maintenance nname</th>
+                            <th>cost</th>
+                            <th>Description</th>
                             <th>Active</th>
                             <th>Action</th>
                         </tr>
