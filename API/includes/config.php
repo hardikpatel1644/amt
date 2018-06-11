@@ -6,7 +6,7 @@
 define("ROOT", $_SERVER['DOCUMENT_ROOT']);
 
 
-define("ENVIRONMENT", 0); // 1 = live || 0 = TEST
+define("ENVIRONMENT", 1); // 1 = live || 0 = TEST
 // Database details
 define("DB_HOST", "127.0.0.1"); // Database Host  or ip address
 define("DB_USERNAME", "root"); // Database username

@@ -1,27 +1,18 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "7179e0ef-1606-45bc-9641-9b577b965091",
 		"name": "vehicle",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "ce2c2f31-40e6-14da-2bd3-4e2a3f39ec52",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "http://localhost/amt/API/vehicle/create.php",
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
+				"url": "http://localhost/amt/API/vehicle/create.php",
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					},
-					{
-						"key": "TOKEN",
-						"value": "fc988449032127acb593fe648ff87143"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -80,30 +71,11 @@
 							"type": "text"
 						},
 						{
-							"key": "id_user",
-							"value": "32",
-							"description": "",
-							"type": "text"
-						},
-						{
 							"key": "body_type",
 							"value": "sedan",
 							"description": "",
 							"type": "text"
 						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost/amt/API/vehicle/create.php",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"amt",
-						"API",
-						"vehicle",
-						"create.php"
 					]
 				},
 				"description": "test\t"
@@ -113,14 +85,13 @@
 		{
 			"name": "http://localhost/amt/API/vehicle/update.php",
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
+				"url": "http://localhost/amt/API/vehicle/update.php",
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
 					}
 				],
 				"body": {
@@ -194,34 +165,25 @@
 						},
 						{
 							"key": "id",
-							"value": "5",
+							"value": "17",
 							"type": "text",
 							"description": ""
+						},
+						{
+							"key": "id_user",
+							"value": "40",
+							"description": "",
+							"type": "text"
 						}
 					]
 				},
-				"url": {
-					"raw": "http://localhost/amt/API/vehicle/update.php",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"amt",
-						"API",
-						"vehicle",
-						"update.php"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "http://localhost/amt/API/vehicle/delete.php?id=7",
 			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://localhost/amt/API/vehicle/delete.php?id=7",
 					"protocol": "http",
@@ -239,19 +201,24 @@
 							"key": "id",
 							"value": "7"
 						}
-					]
-				}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "http://localhost/amt/API/vehicle/view.php?id=3",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
 				"url": {
-					"raw": "http://localhost/amt/API/vehicle/view.php?id=3",
+					"raw": "http://localhost/amt/API/vehicle/view.php?id=12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -265,56 +232,30 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "3"
+							"value": "12",
+							"equals": true,
+							"description": ""
 						}
-					]
-				}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "http://localhost/amt/API/vehicle/list.php",
 			"request": {
+				"url": "http://localhost/amt/API/vehicle",
 				"method": "GET",
 				"header": [],
 				"body": {},
-				"url": {
-					"raw": "http://localhost/amt/API/vehicle/list.php",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"amt",
-						"API",
-						"vehicle",
-						"list.php"
-					]
-				}
+				"description": ""
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "1e7e5dc5-7a07-4100-a76a-a505a3eac05f",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "e726ac66-66b8-468d-b6e9-10bfaa5a58cc",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	]
 }

@@ -29,7 +29,12 @@ run unit test
 - Run command like : phpunit Test\API\lib\function_test.php
 
 - lib/functions.php
-  test class path : \amt\Tests\API\lib\function_test.php
+    - function_test.php :  phpunit \amt\Tests\API\lib\function_test.php
+- models
+    - auth_test.php :  phpunit \amt\Tests\API\models\auth_test.php
+    - maintainance_model_test.php :  phpunit \amt\Tests\API\models\maintainance_model_test.php
+    - user_model_test.php :  phpunit \amt\Tests\API\models\user_model_test.php
+    - vehicle_model_test.php :  phpunit \amt\Tests\API\models\vehicle_model_test.php
 
 
 

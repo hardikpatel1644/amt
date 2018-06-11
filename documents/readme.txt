@@ -1,1 +1,105 @@
+Automobile maintenance system (amt)
+-------------------------------------------------------
+Installation
+- unzip "amt.zip" file into your server root directory.
+- create database "amt" and import "amt.sql" sample database file from (/amt/db/) directory.
+- Now try to execute project from server. or use this link (http://localhost/amt or http://127.0.0.1/amt) or http://yourserverip/amt
+
+
+-------------------------------------------------------
+
+Project directory structure
+--------------------------------------------------------
+- API  : contains Server side API logic
+	- includes : contains configurations files
+		- config.php - basic configuration for project
+		- db.php - database connection class
+	- lib : contains common library or functions files
+		- functions.php - common functions used in project
+	- maintenance : contains api calls for maintenance module
+		- create.php - add data into table
+		- delete.php - delete data from table
+		- index.php - list data from table
+		- update.php - update data for table
+		- view.php - view single entry from table
+	- models : 
+		- auth.php
+		- base_model.php
+		- maintenance_model.php
+		- user_model.php
+		- vehicle_model.php
+	- user : 
+		- create.php - add data into table
+		- delete.php - delete data from table
+		- index.php - list data from table
+		- login.php - api call for check login for user 
+		- logpot.php - api call for logout
+		- update.php - update data for table
+		- view.php - view single entry from table
+	- vehicle : 
+		- create.php - add data into table
+		- delete.php - delete data from table
+		- index.php - list data from table
+		- update.php - update data for table
+		- view.php - view single entry from table
+	
+- Tests : contains test cases for application
+	- API  : contains test cases for API
+		- includes : contains configurations files
+			- config.php - basic configuration for Test of project
+		- lib :
+			- function_test.php - Test cases for functions.php
+		- models : 
+			- auth_test.php - test cases for auth.php class
+			- maintenance_model_test.php - test cases for maintenance_model.php class
+			- user_model_test.php - test cases for user_model.php class
+			- vehicle_model_test.php - test cases for vechicle_model.php class
+ 
+- assets : contains css and javascript files
+	- css : 
+		- style.css
+	- js : contains javascript files for react components and classes
+		- maintenance : contains react components for maintenance API
+			- create_maintenance.component.js
+			- delete_maintenance.component.js
+			- maintenance_table_row.component.js
+			- maintenances_table.component.js
+			- update_maintenance.component.js
+			- view_maintenance.component.js
+		- user : contains react components for user API
+			- create_user.component.js
+			- delete_user.component.js
+			- main.component.js
+			- update_user.component.js
+			- user_table_row.component.js
+			- users.component.js
+			- users_table.component.js 
+			- view_user.component.js		
+		- vehicle : contains react components for vehicle API
+			- create_vehicle.component.js : 
+			- delete_vehicle.component.js
+			- vehicle_table_row.component.js
+			- vehicles_table.component.js
+			- update_vehicle.component.js
+			- view_vehicle.component.js
+		- login.component.js
+		- top_actios.component.php
+- db : contains sample database 
+	- amt.sql
+	- amt_test.sql
+- documents : contains documents for projects
+	- readme.txt
+	- unit_test_readme.txt
+- sample_request : contains sample postman requests for API calls
+	- maintenance.postman_collection.json
+	- user.postman_collection.json
+	- vehicle.postman_collection.json
+- vendor : contains library of testcases
+- composer.json  : file for install phpunit test case library / vendors
+- composer.lock 
+- dashboard.html : file for dashboard of application
+- index.html : file for main project execution file
+- users.html : file for list all project users
+- vehicles.html : file for list all vehicles and their maintenances 
+
 

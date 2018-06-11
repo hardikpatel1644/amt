@@ -1,35 +1,51 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "2d00b994-5e49-4297-9fdc-3f8420eb1772",
-		"name": "maintenance",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"name": "maintainance",
+		"_postman_id": "bc7bf44d-cf48-0c4d-e5e3-22982ae04e8f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "http://localhost/amt/API/maintainance/create.php",
 			"request": {
-				"auth": {
-					"type": "noauth"
+				"url": {
+					"raw": "http://localhost/amt/API/maintenance/create.php?id_vehicle=12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"maintenance",
+						"create.php"
+					],
+					"query": [
+						{
+							"key": "id_vehicle",
+							"value": "12",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
 				},
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "id_vehicle",
-							"value": "13",
+							"value": "12",
 							"type": "text",
 							"description": ""
 						},
 						{
-							"key": "maintainance_name",
-							"value": "oil_change",
+							"key": "maintenance_name",
+							"value": "tire_rotation",
 							"description": "",
 							"type": "text"
 						},
@@ -47,17 +63,49 @@
 						}
 					]
 				},
-				"url": {
-					"raw": "http://localhost/amt/API/maintenance/create.php",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"path": [
-						"amt",
-						"API",
-						"maintenance",
-						"create.php"
+				"description": "test\t"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/maintainance/update.php",
+			"request": {
+				"url": "http://localhost/amt/API/maintenance/update.php",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "maintenance_name",
+							"value": "tire_rotation",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "cost",
+							"value": "20",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "description",
+							"value": "tire_rotation",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "id",
+							"value": "14",
+							"description": "",
+							"type": "text"
+						}
 					]
 				},
 				"description": "test\t"
@@ -65,13 +113,10 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost/amt/API/maintenance/",
+			"name": "http://localhost/amt/API/maintenance/index.php?id_vehicle=12",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
 				"url": {
-					"raw": "http://localhost/amt/API/maintenance/",
+					"raw": "http://localhost/amt/API/maintenance/index.php?id_vehicle=12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,33 +125,88 @@
 						"amt",
 						"API",
 						"maintenance",
-						""
-					]
-				}
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "id_vehicle",
+							"value": "12",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "8adf412a-3786-4d11-974f-6b2a498c0c63",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		},
 		{
-			"listen": "test",
-			"script": {
-				"id": "bb19a60d-8397-4a98-8795-473a3fba01d0",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
+			"name": "http://localhost/amt/API/maintenance/delete.php?id=15",
+			"request": {
+				"url": {
+					"raw": "http://localhost/amt/API/maintenance/delete.php?id=15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"maintenance",
+						"delete.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "15",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/amt/API/maintenance/view.php?id=12",
+			"request": {
+				"url": {
+					"raw": "http://localhost/amt/API/maintenance/view.php?id=12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"amt",
+						"API",
+						"maintenance",
+						"view.php"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "12",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
