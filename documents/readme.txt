@@ -1,4 +1,4 @@
-Automobile maintenance system (amt)
+Automobile maintenance tracker(amt)
 -------------------------------------------------------
 Installation
 - unzip "amt.zip" file into your server root directory.
