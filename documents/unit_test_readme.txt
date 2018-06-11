@@ -3,8 +3,8 @@ Installation
 Unit test installation steps
 
 
-2. Create composer.json in to root directory.
-3. Add following script into composer.json
+1. Create composer.json in to root directory.
+2. Add following script into composer.json
 {
     "require": {
     },
